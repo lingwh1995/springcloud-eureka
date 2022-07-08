@@ -1,0 +1,18 @@
+#logback相关配置:开始
+#注意: Linux下只需修改${application.logging.log-home}值即可修改日志存放位置
+application:
+  name: SPRINGCLOUD-REGISTER-CENTER-SINGLE-NODE
+  port: 7001 #配置端口号,通过端口号区分不同的节点,所有的环境公用一个端口号
+  logging:
+    log-home: D:\repository\workspace\IDEA\PERSONAL\springcloud-eureka\log\ #所有日志存放在位置,加上\方便Linux环境下配置
+    log-name: ${application.name}${application.port} #日志名称
+    level: info #dev/test/prod环境中默认的日志输出级别,一般设置为debug,这样会输出debug信息,只想看info日志,则修改${application.logging.mointor-show-level}的值
+    append: false #是否启用append(追加到已经存在日志文件尾部),true:重启项目会追加新日志到之前日志,false:重启项目会清空之前的日志
+    immediate-flush: true #是否启用immediateFlush(立即刷新),true:重启项目自动追加,false:重启项目会情况之前的日志
+    module-dir-name: ${application.name}\ #具体模块日志存放位置加上\方便Linux环境下配置
+    node-dir-name: ${application.port}\ #具体模块的具体节点,不同的几点通过端口区分
+    log-location-prefix: ${application.logging.log-home}${application.logging.module-dir-name}${application.logging.node-dir-name} #定义日志存放位置,Linux下只需修改${application.logging.log-home}值即可
+  mointor:
+    logging:
+      show-level: info #SpringBootAdmin中展示的日志是什么级别的
+      log-location: '${application.logging.log-location-prefix}${application.logging.log-name}-${application.mointor.logging.show-level}.log' #项目生成的某一级别日志的具体位置

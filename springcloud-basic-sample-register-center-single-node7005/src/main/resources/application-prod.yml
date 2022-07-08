@@ -1,0 +1,38 @@
+server:
+  port: ${application.port} #访问端口
+spring:
+  application:
+    name: ${application.name}${application.port}-PROD  #注意:服务名不要出现_
+  devtools: #热部署开关
+    restart:
+      enabled: true
+  # 将Client作为服务注册到SpringBootAdmin Server端，通过Server来监听项目的运行情况
+  boot:
+    admin:
+      client:
+        url: http://192.168.0.4:7001
+eureka:
+  instance:
+    hostname: 192.168.0.4
+  client:
+    register-with-eureka: true #不向注册中心注册自己
+    fetch-registry: false #表示自己就是注册中心,我的职责就是维护实例,不需要去检索服务
+    service-url:
+      defaultZone: http://192.168.0.4:7001/eureka
+  server:
+    enable-self-preservation: true #是否开启自我保护,true:服务失效不直接剔除,false:服务失效直接剔除
+    eviction-interval-timer-in-ms: 2000 #默认发送心跳的时间间隔,单位为ms
+
+#通过下面的配置启用所有的监控端点，默认情况下，这些端点是禁用的；
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always # 访问/actuator/health时，显示详细信息，而不是仅仅显示"status": "UP"
+    # 日志记录
+    logfile:
+      external-file: ${application.mointor.logging.log-location}

@@ -1,0 +1,12 @@
+#logback相关配置:开始
+application:
+  name: SPRINGCLOUD-PROVIDER-PAYMENT-SERVICE-CLUSTER
+  logging:
+    log-name: ${application.name} #日志名称
+    level: info #dev/test/prod环境中默认的日志输出级别,一般设置为debug,这样会输出debug信息,只想看info日志,则修改${application.logging.mointor-show-level}的值
+    append: true #是否启用append(追加到已经存在日志文件尾部),true:重启项目会追加新日志到之前日志,false:重启项目会清空之前的日志
+    immediate-flush: true #是否启用immediateFlush(立即刷新),true:重启项目自动追加,false:重启项目会情况之前的日志
+    log-home-all: D:\repository\workspace\IDEA\PERSONAL\springcloud-eureka\log\ #所有日志存放在位置,加上\方便Linux环境下配置
+    log-home-module: ${application.logging.log-name}\ #具体模块日志存放位置加上\方便Linux环境下配置
+    mointor-show-level: info #SpringBootAdmin中展示的日志是什么级别的
+#logback相关配置:结束
