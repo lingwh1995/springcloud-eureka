@@ -107,7 +107,8 @@
     vm.max_map_count = 262144
     #重新加载/etc/sysctl.conf配置
     sysctl -p
-
+7.特别注意
+    logback.xml中配置的logstash地址是在bootstrap.yml中配置的
 
 
 
