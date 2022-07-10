@@ -1,8 +1,8 @@
 server:
-  port: ${application.port} #访问端口
+  port: 9003 #访问端口
 spring:
   application:
-    name: ${application.name}${application.port}-TEST  #注意:服务名不要出现_
+    name: SPRINGCLOUD-BASIC-SAMPLE-MOINTOR-SPRINGBOOT-ADMIN-SERVER-DEV  #注意:服务名不要出现_
   devtools: #热部署开关
     restart:
       enabled: true

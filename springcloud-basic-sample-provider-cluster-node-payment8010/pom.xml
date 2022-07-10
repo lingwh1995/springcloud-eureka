@@ -96,12 +96,24 @@
                 <artifactId>maven-antrun-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>del-jar</id>
+                        <phase>clean</phase>
+                        <configuration>
+                            <tasks>
+                                <!-- 这是将当前模块下的target下的jar包删除-->
+                                <delete file="docker/${build.finalName}.jar"/>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>copy-jar</id>
                         <phase>install</phase>
                         <configuration>
                             <tasks>
-                                <delete file="docker/${build.finalName}.jar"/>
-                                <!-- 这是将当前模块下的target下的jar包copy到当前模块根目录下docker目录中。。-->
+                                <!-- 这是将当前模块下的target下的jar包copy到当前模块根目录下docker目录中-->
                                 <copy todir="docker" file="target/${build.finalName}.jar"></copy>
                             </tasks>
                         </configuration>
@@ -160,18 +172,40 @@
                         <REMOTE_JAR_FILE_DIR>/${project.parent.artifactId}/${project.build.finalName}.jar</REMOTE_JAR_FILE_DIR>
                     </buildArgs>
                 </configuration>
-<!--                <executions>-->
-<!--                    &lt;!&ndash;如果想在项目打包时构建镜像添加&ndash;&gt;-->
-<!--                    <execution>-->
-<!--                        <id>build-image</id>-->
-<!--                        <phase>install</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>build</goal>-->
-<!--                            <goal>run</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
+                <executions>
+                    <!--如果想在项目打包时构建镜像添加-->
+                    <execution>
+                        <id>build-image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
+        <!--打包多环境-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/*.yml</exclude>
+                    <exclude>**/*.xml</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/${profile.active}</directory>
+                <!--引入所需环境的配置文件-->
+                <filtering>true</filtering>
+                <includes>
+                    <include>bootstrap.yml</include>
+                    <!--根据maven选择环境导入配置文件-->
+                    <include>application-${profile.active}.yml</include>
+                    <include>mapper/*.xml</include>
+                    <include>*.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

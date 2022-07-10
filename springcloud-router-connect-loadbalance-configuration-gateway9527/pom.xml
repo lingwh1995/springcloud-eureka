@@ -50,5 +50,15 @@
                 </configuration>
             </plugin>
         </plugins>
+        <!--打包多环境-->
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <includes>
+                    <!--不区分环境:直接加载application.yml配置文件-->
+                    <include>application.yml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

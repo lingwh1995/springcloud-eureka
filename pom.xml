@@ -267,28 +267,5 @@
                 <version>${org.springframework.boot.spring-boot-maven-plugin.version}</version>
             </plugin>
         </plugins>
-        <!--打包多环境-->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/*.yml</exclude>
-                    <exclude>**/*.xml</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources/${profile.active}</directory>
-                <!--引入所需环境的配置文件-->
-                <filtering>true</filtering>
-                <includes>
-                    <include>bootstrap.yml</include>
-                    <!--根据maven选择环境导入配置文件-->
-                    <include>application-${profile.active}.yml</include>
-                    <include>mapper/*.xml</include>
-                    <include>*.xml</include>
-                </includes>
-            </resource>
-        </resources>
-
     </build>
 </project>
