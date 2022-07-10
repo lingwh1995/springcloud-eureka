@@ -31,10 +31,10 @@
     <!--控制台日志输出预选样式-->
     <property name="CONSOLE_LOG_PATTERN_1" value="%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}): %cyan(%msg%n)"/>
     <property name="CONSOLE_LOG_PATTERN_2" value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) %highlight([%-5level]) %green(%logger) %msg%n"/>
-    <property name="CONSOLE_LOG_PATTERN_3" value="%date{yyyy-MM-dd HH:mm:ss}  %green(%-5level) %boldMagenta(${PID:-}) -- [%+20thread] %cyan(%logger{20}) %line       : %msg%n"/>
+    <property name="CONSOLE_LOG_PATTERN_3" value="%date{yyyy-MM-dd HH:mm:ss} [TraceId:%X{X-B3-TraceId:-} SpanId:%X{X-B3-SpanId:-} Span-Export:%X{X-Span-Export:-}]  %green(%-5level) %boldMagenta(${PID:-}) -- [%+20thread] %cyan(%logger{20}) %line       : %msg%n"/>
     <!--文件中日志输出预选样式-->
     <property name="FILE_LOG_PATTERN_1" value="%d{yyyyMMdd:HH:mm:ss.SSS} [%thread] %-5level  %msg%n"/>
-    <property name="FILE_LOG_PATTERN_2" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %t %file:%line %X{traceId} -| %m%n"/>
+    <property name="FILE_LOG_PATTERN_2" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %traceId %-5level %t %file:%line %X{traceId} -| %m%n"/>
 
     <!--控制台日志输出格式-->
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN_3}"/>
@@ -266,11 +266,7 @@
 
     <!--输出到LOGSTASH:开始-->
     <!-- 将项目本次运行ERROR日志同步输出到文件,按照每天生成日志文件,会自动拼接上一次日志 -->
-    <appender name="APPENDER-LOGSTASH-ERROR" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <!-- 过滤器，只记录 info 级别以上的日志 -->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
-        </filter>
+    <appender name="APPENDER-LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <!--  logstash服务器地址-->
         <destination>192.168.0.4:5044</destination>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
@@ -282,6 +278,9 @@
                         "deploy_machine_ip":"${DEPLOY_MACHINE_IP}",
                         "module_name":"${LOG_NAME}",
                         "timestamp": "%date{\"yyyy-MM-dd'T'HH:mm:ss,SSSZ\"}",
+                        "traceId": "%X{X-B3-TraceId:-}"}",
+                        "spanId": "%X{X-B3-SpanId:-}"}",
+                        "spanExport": "%X{X-Span-Export:-}"}",
                         "log_level":"%level",
                         "message":"%msg%n"
                         }
@@ -289,10 +288,9 @@
                 </pattern>
             </providers>
         </encoder>
-<!--        <keepAliveDuration>5 minutes</keepAliveDuration>-->
     </appender>
-    <appender name="ASYNC-APPENDER-LOGSTASH-ERROR" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="APPENDER-LOGSTASH-ERROR" />
+    <appender name="ASYNC-APPENDER-LOGSTASH" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="APPENDER-LOGSTASH" />
         <!-- 设置异步阻塞队列的大小，为了不丢失日志建议设置的大一些，单机压测时100000是没问题的，应该不用担心OOM -->
         <queueSize>10000</queueSize>
         <!-- 设置丢弃DEBUG、TRACE、INFO日志的阀值，不丢失 -->
@@ -319,7 +317,8 @@
 <!--            <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-INFO"/>-->
 <!--            <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-DEBUG"/>-->
 <!--            <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-ERROR"/>-->
-            <appender-ref ref="ASYNC-APPENDER-LOGSTASH-ERROR"/>
+            <!--异步滚动输出到logstash-->
+            <appender-ref ref="ASYNC-APPENDER-LOGSTASH"/>
         </root>
     </springProfile>
 
@@ -336,6 +335,8 @@
 <!--            <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-INFO"/>-->
 <!--            <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-DEBUG"/>-->
 <!--            <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-ERROR"/>-->
+            <!--异步滚动输出到logstash-->
+            <appender-ref ref="ASYNC-APPENDER-LOGSTASH-DEBUG"/>
         </root>
     </springProfile>
 
@@ -352,6 +353,8 @@
             <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-INFO"/>
             <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-DEBUG"/>
             <appender-ref ref="ASYNC-APPENDER-ROLLINGFILEAPPENDER-ERROR"/>
+            <!--异步滚动输出到logstash-->
+            <appender-ref ref="ASYNC-APPENDER-LOGSTASH-DEBUG"/>
         </root>
     </springProfile>
 </configuration>

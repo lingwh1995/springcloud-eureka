@@ -27,12 +27,18 @@ public class OrderConsumerControllerDynamicFeignClientFactory {
     @Autowired
     private DynamicFeignClientFactory<PaymentServiceOpenFeignDynamicFeignClientFactory> client;
 
+    /**
+     * 获取具体的Service接口
+     * @return
+     */
+    public PaymentServiceOpenFeignDynamicFeignClientFactory getPaymentService() {
+       return client.getFeignClient(PaymentServiceOpenFeignDynamicFeignClientFactory.class,
+               SERVICE_PROVIDER_NAME.toUpperCase());
+    }
 
     @GetMapping("/consumer/dynamic/payment/create")
     public CommonResult<Payment> create(Payment payment) {
-        PaymentServiceOpenFeignDynamicFeignClientFactory feignClient = client
-                .getFeignClient(PaymentServiceOpenFeignDynamicFeignClientFactory.class, SERVICE_PROVIDER_NAME);
-        return feignClient.create(payment);
+        return this.getPaymentService().create(payment);
     }
 
     /**
@@ -43,9 +49,7 @@ public class OrderConsumerControllerDynamicFeignClientFactory {
      */
     @GetMapping("/consumer/dynamic/payment/get/{id}")
     public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
-        PaymentServiceOpenFeignDynamicFeignClientFactory feignClient = client
-                .getFeignClient(PaymentServiceOpenFeignDynamicFeignClientFactory.class, SERVICE_PROVIDER_NAME);
-        return feignClient.getPaymentById(id);
+        return this.getPaymentService().getPaymentById(id);
     }
 
     /**
@@ -57,15 +61,11 @@ public class OrderConsumerControllerDynamicFeignClientFactory {
      */
     @GetMapping("/consumer/dynamic/payment/replace_router/get/{id}")
     public CommonResult<Payment> getPaymentReplaceRouter(@PathVariable("id") Long id) {
-        PaymentServiceOpenFeignDynamicFeignClientFactory feignClient = client
-                .getFeignClient(PaymentServiceOpenFeignDynamicFeignClientFactory.class, SERVICE_PROVIDER_NAME);
-        return feignClient.getPaymentByIdReplaceRouter(id);
+        return this.getPaymentService().getPaymentByIdReplaceRouter(id);
     }
 
     @GetMapping("/consumer/dynamic/payment/openfeign/timeout")
     public String getPaymentByIdTimeout() {
-        PaymentServiceOpenFeignDynamicFeignClientFactory feignClient = client
-                .getFeignClient(PaymentServiceOpenFeignDynamicFeignClientFactory.class, SERVICE_PROVIDER_NAME);
-        return feignClient.getPaymentByIdTimeout();
+        return this.getPaymentService().getPaymentByIdTimeout();
     }
 }
