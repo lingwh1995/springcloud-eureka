@@ -1,0 +1,11 @@
+I/O exception (java.net.NoRouteToHostException) caught when processing request to {}->http://192.168.0.4:8010: No route to host (Host unreachable)
+解决方法:Centos7版本
+ip addr 查看到docker的ip
+172.17.0.1/16
+
+firewall-cmd --zone=trusted --add-source=172.19.0.1/16 --permanent
+success
+firewall-cmd --zone=trusted --add-source=172.17.0.1/16 --permanent
+success
+firewall-cmd --zone=trusted --add-source=127.0.0.1/8 --permanent
+success

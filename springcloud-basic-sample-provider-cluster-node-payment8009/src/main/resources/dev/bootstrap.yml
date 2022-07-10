@@ -1,0 +1,52 @@
+#配置文件修改说明-------------------------------------------------:开始
+#注意:不同的部署环境需要修改的配置
+#   1.${application.logging.log-home}  #修改日志存放位置
+#       修改原因: Linux和Windows目录结构不同
+#   2.${application.deploy-machine-ip} #修改服务部署机器ip地址
+#       同一台机器上多个节点微服务日志推送到ES中使用的是相同索引名称,不同台机器上多个节点微服务日志推送到ES中使用的是不同的索引名称
+#       修改原因: 微服务通常部署在不同的机器上，形成集群
+#         针对伪分布式集群(一台机器上部署多份): 使用端口来区分不同的微服务
+#         针对真分布式集群(多台机器上部署):  使用ip地址来区分不同的微服务
+#配置文件修改说明-------------------------------------------------:结束
+
+#设置spring项目运行的环境,这个值是从pom中读取的:开始
+spring:
+  profiles:
+    active: @profile.active@
+#设置spring项目运行的环境,这个值是从pom中读取的:结束
+
+application:
+  name: SPRINGCLOUD-BASIC-SAMPLE-PROVIDER-PAYMENT-SERVICE-CLUSTER
+  port: @docker.container.port@ #配置端口号,通过端口号区分不同的节点,所有的环境公用一个端口号
+  deploy-machine-ip: 192.168.0.1 #部署机器所在ip
+  #logback相关配置:开始
+  logging:
+    log-home: D:\repository\workspace\IDEA\PERSONAL\springcloud-eureka\log\ #所有日志存放在位置,加上\方便Linux环境下配置
+    log-name: ${application.name}${application.port} #日志名称
+    level: info #dev/test/prod环境中默认的日志输出级别,一般设置为debug,这样会输出debug信息,只想看info日志,则修改${application.logging.mointor-show-level}的值
+    append: false #是否启用append(追加到已经存在日志文件尾部),true:重启项目会追加新日志到之前日志,false:重启项目会清空之前的日志
+    immediate-flush: true #是否启用immediateFlush(立即刷新),true:重启项目自动追加,false:重启项目会情况之前的日志
+    module-dir-name: ${application.name}\ #具体模块日志存放位置加上\方便Linux环境下配置
+    node-dir-name: ${application.port}\ #具体模块的具体节点,不同的几点通过端口区分
+    log-location-prefix: ${application.logging.log-home}${application.logging.module-dir-name}${application.logging.node-dir-name} #定义日志存放位置,Linux下只需修改${application.logging.log-home}值即可
+  #logback相关配置:结束
+
+  #springboot admin相关配置:开始
+  mointor:
+    logging:
+      show-level: info #SpringBootAdmin中展示的日志是什么级别的
+      log-location: '${application.logging.log-location-prefix}${application.logging.log-name}-${application.mointor.logging.show-level}.log' #项目生成的某一级别日志的具体位置
+  #springboot admin相关配置:结束
+
+  #logstash相关配置:开始
+  logstash:
+    addr: 192.168.0.4:5044
+  #logstash相关配置:结束
+
+  #elasticsearch相关配置:开始
+  elasticsearch:
+    #logstah将数据推送到elasticsearch中以什么索引作为名称
+    indice-name: '@project.parent.artifactId@-@project.artifactId@-${application.deploy-machine-ip}'
+  #elasticsearch相关配置:结束
+
+

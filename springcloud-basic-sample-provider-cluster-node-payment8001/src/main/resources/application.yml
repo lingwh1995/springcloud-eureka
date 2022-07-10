@@ -1,5 +1,0 @@
-#设置spring项目运行的环境,这个值是从pom中读取的:开始
-spring:
-  profiles:
-    active: '@profile.active@'
-#设置spring项目运行的环境,这个值是从pom中读取的:结束    

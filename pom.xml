@@ -74,11 +74,10 @@
         <module>springcloud-provider-seata-account8007</module>
         <module>springcloud-provider-seata-storage8008</module>
         <module>springcloud-mointor-springboot-admin-server9003</module>
-        <module>springcloud-basic-sample-register-center-single-node7004</module>
+        <module>springcloud-basic-sample-register-center-single-node7005</module>
         <module>springcloud-basic-sample-consumer-loadbalance-openfeign-configuration-order80</module>
-        <module>springcloud-basic-sample-provider-cluster-node-payment8001</module>
-        <module>springcloud-basic-sample-provider-cluster-node-payment8002</module>
-
+        <module>springcloud-basic-sample-provider-cluster-node-payment8009</module>
+        <module>springcloud-basic-sample-provider-cluster-node-payment8010</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
@@ -99,6 +98,7 @@
         <com.ctrip.framework.apollo.apollo-client.version>2.0.1</com.ctrip.framework.apollo.apollo-client.version>
         <io.seata.version>1.4.2</io.seata.version>
         <spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
+        <net.logstash.logback.logstash-logback-encoder.version>5.2</net.logstash.logback.logstash-logback-encoder.version>
         <!--docker私服地址:端口-->
         <docker.registry>192.168.0.4:5000</docker.registry>
         <!--docker部署地址:端口-->
@@ -198,6 +198,12 @@
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring.boot.admin.version}</version>
             </dependency>
+            <!--logstah-->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${net.logstash.logback.logstash-logback-encoder.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -263,28 +269,26 @@
         </plugins>
         <!--打包多环境-->
         <resources>
-            <!--排除配置文件-->
             <resource>
                 <directory>src/main/resources</directory>
-                <!-- 排除所有的环境配置文件-->
                 <excludes>
-                    <!--使用通配符，当然可以定义多个exclude标签进行排除-->
-                    <exclude>application*.yml</exclude>
+                    <exclude>**/*.yml</exclude>
+                    <exclude>**/*.xml</exclude>
                 </excludes>
             </resource>
-            <!--根据激活条件引入打包所需的配置和文件-->
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/main/resources/${profile.active}</directory>
                 <!--引入所需环境的配置文件-->
                 <filtering>true</filtering>
                 <includes>
                     <include>bootstrap.yml</include>
-                    <include>application.yml</include>
                     <!--根据maven选择环境导入配置文件-->
                     <include>application-${profile.active}.yml</include>
                     <include>mapper/*.xml</include>
+                    <include>*.xml</include>
                 </includes>
             </resource>
         </resources>
+
     </build>
 </project>

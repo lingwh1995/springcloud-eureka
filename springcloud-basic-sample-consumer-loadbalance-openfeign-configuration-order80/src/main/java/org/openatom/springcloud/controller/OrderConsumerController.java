@@ -2,12 +2,9 @@ package org.openatom.springcloud.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openatom.springcloud.services.PaymentServiceOpenFeign;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 import org.openatom.springcloud.entities.CommonResult;
 import org.openatom.springcloud.entities.Payment;
 
@@ -29,9 +26,27 @@ public class OrderConsumerController {
         return paymentServiceOpenFeign.create(payment);
     }
 
+    /**
+     * 测试url:
+     *      http://localhost/consumer/payment/get/1
+     * @param id
+     * @return
+     */
     @GetMapping("/consumer/payment/get/{id}")
     public CommonResult<Payment> getPayment(@PathVariable("id") Long id) {
         return paymentServiceOpenFeign.getPaymentById(id);
+    }
+
+    /**
+     * 使用拦截器替换路由服务提供端URL中的占位符
+     * 测试url:
+     *      http://localhost/consumer/payment/replace_router/get/1
+     * @param id
+     * @return
+     */
+    @GetMapping("/consumer/payment/replace_router/get/{id}")
+    public CommonResult<Payment> getPaymentReplaceRouter(@PathVariable("id") Long id) {
+        return paymentServiceOpenFeign.getPaymentByIdReplaceRouter(id);
     }
 
     @GetMapping("/consumer/payment/openfeign/timeout")
