@@ -14,8 +14,13 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <!--docker私服地址:端口-->
-        <docker.registry>192.168.0.4:5000</docker.registry>
+        <!--默认私服的ip:端口-->
+        <default.registry>|192.168.0.4:5000</default.registry>
+        <!--harbor私服的ip:端口-->
+        <harbor.registry>192.168.0.4:5001</harbor.registry>
+        <harbor.registry.username>admin</harbor.registry.username>
+        <harbor.registry.password>Harbor12345</harbor.registry.password>
+        <docker.registry>${harbor.registry}</docker.registry>
         <!--docker部署地址:端口-->
         <docker.dockerHost>tcp://192.168.0.4:2375</docker.dockerHost>
         <!--设置项目端口-->
@@ -94,7 +99,7 @@
                     </execution>
                     <execution>
                         <id>copy-jar</id>
-                        <phase>install</phase>
+                        <phase>package</phase>
                         <configuration>
                             <tasks>
                                 <!-- 这是将当前模块下的target下的jar包copy到当前模块根目录下docker目录中-->
@@ -112,14 +117,11 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
                     <dockerHost>${docker.dockerHost}</dockerHost>
-                    <!--认证配置,用于私有registry认证-->
-                    <!--                    <authConfig>-->
-                    <!--                        <username>admin</username>-->
-                    <!--                        <password>xxxxx</password>-->
-                    <!--                    </authConfig>-->
-                    <!-- harbor镜像仓库地址-->
-                    <!--                    <pushRegistry>http://${docker.registry}</pushRegistry>-->
-                    <!--                    <pushRegistry>http://192.168.0.4:5000</pushRegistry>-->
+                    <!--harbor镜像仓库地址认证配置,用于私有registry认证-->
+                    <authConfig>
+                        <username>${harbor.registry.username}</username>
+                        <password>${harbor.registry.password}</password>
+                    </authConfig>
                     <images>
                         <image>
                             <!--显示日志的时候-->
@@ -127,12 +129,13 @@
                             <!--如果只给docker本地镜像库中推送,格式为 命名空间/项目名称:tags名称,示例:项目artifactId/模块artifactId:模块version-->
                             <!--<name>${project.parent.artifactId}/${project.name}:${project.version}</name>-->
                             <!--如果要同时给私服中推送,格式为 registry的ip:命名空间/项目名称:tags名称,示例:私服的ip:项目artifactId/模块artifactId:模块version-->
+                            <!--<name>${docker.registry}/${project.parent.artifactId}/${project.name}:${project.version}</name>-->
                             <name>${docker.registry}/${project.parent.artifactId}/${project.name}:${project.version}</name>
                             <!--定义镜像构建行为-->
                             <build>
                                 <!-- 指定dockerfile文件的位置-->
                                 <dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
-                                <!--                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>-->
+                                <!--<dockerFile>${project.basedir}/Dockerfile</dockerFile>-->
                             </build>
 
                             <!-- 定义容器启动行为-->
@@ -157,7 +160,7 @@
                     <!--如果想在项目打包时构建镜像添加-->
                     <execution>
                         <id>build-image</id>
-                        <phase>install</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                             <goal>push</goal>
