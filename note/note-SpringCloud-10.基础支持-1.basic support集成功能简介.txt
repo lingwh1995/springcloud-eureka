@@ -7,4 +7,4 @@
 4.集成Zipkin+Sleuth,实现在日志中输入TraceId和SpanId和Span-Export
 6.集成Dokcer的maven插件
 7.实现OpenFeign动态服务名称和动态URL调用
-8.Docker容器间通信,详细见springcloud-basic-sample-provider-cluster-node-payment8010中pom.xml配置
+8.Docker容器间连接,详细见springcloud-basic-sample-provider-cluster-node-payment8010中pom.xml配置

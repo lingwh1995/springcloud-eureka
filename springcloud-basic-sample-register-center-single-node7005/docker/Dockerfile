@@ -4,8 +4,6 @@ FROM java:8
 VOLUME /software
 #维护者信息
 MAINTAINER tianfeiyu
-#pom.xml中配置的一个变量
-ARG LOCALHOST_JAR_FILE_DIR
 # 将当前maven目录生成的文件复制到docker容器的/目录下
 COPY ${project.build.finalName}.jar app.jar
 # 指定docker容器启动时运行jar包

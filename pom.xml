@@ -75,7 +75,7 @@
         <module>springcloud-provider-seata-storage8008</module>
         <module>springcloud-mointor-springboot-admin-server9003</module>
         <module>springcloud-basic-sample-register-center-single-node7005</module>
-        <module>springcloud-basic-sample-consumer-loadbalance-openfeign-configuration-order80</module>
+        <module>springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80</module>
         <module>springcloud-basic-sample-provider-cluster-node-payment8009</module>
         <module>springcloud-basic-sample-provider-cluster-node-payment8010</module>
     </modules>
@@ -235,6 +235,14 @@
             <id>prod</id>
             <properties>
                 <profile.active>prod</profile.active>
+            </properties>
+        </profile>
+
+        <!--rancher测试专用环境-->
+        <profile>
+            <id>rancher</id>
+            <properties>
+                <profile.active>rancher</profile.active>
             </properties>
         </profile>
     </profiles>

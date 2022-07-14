@@ -62,7 +62,7 @@
 
 5.COPY
     功能类似ADD，但是是不会自动解压文件，也不能访问网络资源
-6.CMD
+6.CMD(会被docker run后面的命令所覆盖)
     构建容器后调用，也就是在容器启动时才进行调用。
 
     格式：
@@ -232,3 +232,5 @@
 
 docker安装java8
 docker pull java:8
+#查看最后30行日志
+docker logs -f --tail=30 容器名称
