@@ -15,9 +15,22 @@ node {
         echo '完成从远程仓库检出代码...'
     }
 
+    /**
+     * maven命令扩展:实现多模块情况下只针对某一个模块打包
+     * -pl, --projects
+     *      Build specified reactor projects instead of all projects
+     *      指定项目其中的一个模块及其依赖
+     *  -am, --also-make
+     *      If project list is specified, also build projects required by the list
+     *      自动构建该模块所依赖的其他模块
+     *
+     */
     stage('打包->安装->构建镜像->推送到私服') {
         echo '开始 打包->安装->构建镜像->推送到私服...'
-        sh "mvn clean install -pl springcloud-basic-sample-register-center-single-node7005 -am"
+        sh "mvn clean install  -DskipTests -pl springcloud-basic-sample-register-center-single-node7005 -am"
+        sh "mvn clean install  -DskipTests -pl springcloud-basic-sample-provider-cluster-node-payment8009 -am"
+        sh "mvn clean install  -DskipTests -pl springcloud-basic-sample-provider-cluster-node-payment8010 -am"
+        sh "mvn clean install  -DskipTests -pl springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80 -am"
         echo '结束 打包->安装->构建镜像->推送到私服...'
     }
     stage('Results') {
