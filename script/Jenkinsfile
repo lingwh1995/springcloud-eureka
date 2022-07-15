@@ -17,11 +17,11 @@ node {
 
     stage('构建代码') {
         echo 'setp 2222....'
-        sh "mvn -f springcloud-api-commons clean install -U"
-        sh "mvn -f springcloud-basic-sample-register-center-single-node7005 clean install -U"
-        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8010 clean install -U"
-        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8009 clean install -U"
-        sh "mvn -f springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80 clean install -U"
+        sh "mvn -f springcloud-api-commons clean install"
+        sh "mvn -f springcloud-basic-sample-register-center-single-node7005 clean -U install"
+        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8010 clean  -U install"
+        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8009 clean  -U install"
+        sh "mvn -f springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80 clean -U install"
     }
     stage('Results') {
         echo 'setp 3....'
