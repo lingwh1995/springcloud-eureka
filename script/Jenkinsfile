@@ -1,7 +1,14 @@
 node {
     def mvnHome
-    stage('Preparation') { // for display purposes
-       echo 'setp 1....'
+    agent { label '192.168.0.5'}      #指定在那台Jenkins节点上运行
+    stage('检出代码') {
+        echo '开始从git检出代码...'
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: '*/master']], extensions: [],
+            userRemoteConfigs: [[url: 'https://gitee.com/lingwh1995/springcloud-eureka.git']]
+        ])
+        echo '完成从git检出代码...'
     }
     stage('Build') {
         echo 'setp 2222....'
