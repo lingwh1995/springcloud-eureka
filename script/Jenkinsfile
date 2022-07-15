@@ -1,6 +1,7 @@
 //定义项目地址
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 node {
+    echo '开始执行自动化...'
     def mvnHome
     /*指定在那台Jenkins节点上运行*/
     agent { label '192.168.0.5'}
@@ -34,8 +35,17 @@ node {
         echo '结束 打包->安装->构建镜像->推送到私服...'
     }
 
+    /**
+     * 删除镜像的名称可以根据实际名称来配置
+     */
     stage('删除docker中本地镜像') {
         echo '开始删除docker中本地镜像....'
+        sh "docker rmi springcloud-eureka/springcloud-basic-sample-register-center-single-node7005"
+        sh "docker rmi springcloud-eureka/springcloud-basic-sample-provider-cluster-node-payment8009"
+        sh "docker rmi springcloud-eureka/springcloud-basic-sample-provider-cluster-node-payment8010"
+        sh "docker rmi springcloud-eureka/springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80"
         echo '完成删除docker中本地镜像....'
     }
+
+    echo '完成执行自动化...'
 }
