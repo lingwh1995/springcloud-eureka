@@ -9,7 +9,7 @@ node {
         checkout([
             $class: 'GitSCM',
             branches: [[name: '*/master']], extensions: [],
-            userRemoteConfigs: [[url: "${project_url}]]
+            userRemoteConfigs: [[url: "${project_url}"]]
         ])
         echo '完成从git检出代码...'
     }
