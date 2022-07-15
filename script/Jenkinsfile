@@ -16,7 +16,7 @@ node {
     }
 
     /**
-     * maven命令扩展:
+     * maven命令扩展:实现多模块情况下只针对某一个模块打包
      * -pl, --projects
      *      Build specified reactor projects instead of all projects
      *      指定项目其中的一个模块及其依赖
