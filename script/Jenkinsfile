@@ -2,7 +2,8 @@
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 node {
     def mvnHome
-    agent { label '192.168.0.5'}      #指定在那台Jenkins节点上运行
+    //指定在那台Jenkins节点上运行
+    agent { label '192.168.0.5'}
     stage('检出代码') {
         echo '开始从git检出代码...'
         checkout([
