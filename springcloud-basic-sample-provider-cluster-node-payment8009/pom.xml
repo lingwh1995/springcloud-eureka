@@ -179,14 +179,6 @@
                     </buildArgs>
                 </configuration>
                 <executions>
-                    <!--如果想在项目install时删除老的镜像镜像添加-->
-                    <execution>
-                        <id>remove-image</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>remove</goal>
-                        </goals>
-                    </execution>
                     <!--如果想在项目install时构建镜像添加-->
                     <execution>
                         <id>build-image</id>
