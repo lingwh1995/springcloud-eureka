@@ -2,20 +2,26 @@
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 node {
     def mvnHome
-    //指定在那台Jenkins节点上运行
+    /*指定在那台Jenkins节点上运行*/
     agent { label '192.168.0.5'}
-    stage('检出代码') {
-        echo '开始从git检出代码...'
+    /*从远程仓库检出代码*/
+    stage('从远程仓库检出代码') {
+        echo '开始从远程仓库检出代码...'
         checkout([
             $class: 'GitSCM',
             branches: [[name: '*/master']], extensions: [],
             userRemoteConfigs: [[url: "${project_url}"]]
         ])
-        echo '完成从git检出代码...'
+        echo '完成从远程仓库检出代码...'
     }
 
-    stage('Build') {
+    stage('构建代码') {
         echo 'setp 2222....'
+        sh "mvn -f springcloud-api-commons clean install"
+        sh "mvn -f springcloud-basic-sample-register-center-single-node7005 clean install"
+        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8010 clean install"
+        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8009 clean install"
+        sh "mvn -f springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80 clean install"
     }
     stage('Results') {
         echo 'setp 3....'
