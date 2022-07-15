@@ -17,12 +17,11 @@ node {
 
     stage('安装并推送到私服') {
         echo '开始安装并推送到私服...'
-        sh "pwd"
-        sh "mvn -f springcloud-basic-sample-register-center-single-node7005 clean install"
-        sh "pwd"
-        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8010 clean install"
-        sh "mvn -f springcloud-basic-sample-provider-cluster-node-payment8009 clean install"
-        sh "mvn -f springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80 clean install"
+        sh "mvn springcloud-api-commons clean install"
+        sh "mvn springcloud-basic-sample-register-center-single-node7005 install"
+        sh "mvn springcloud-basic-sample-provider-cluster-node-payment8010 install"
+        sh "mvn springcloud-basic-sample-provider-cluster-node-payment8009 install"
+        sh "mvn springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80 install"
         echo '结束安装并推送到私服...'
     }
     stage('Results') {
