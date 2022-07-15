@@ -1,3 +1,5 @@
+//定义项目地址
+def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 node {
     def mvnHome
     agent { label '192.168.0.5'}      #指定在那台Jenkins节点上运行
@@ -6,7 +8,7 @@ node {
         checkout([
             $class: 'GitSCM',
             branches: [[name: '*/master']], extensions: [],
-            userRemoteConfigs: [[url: 'https://gitee.com/lingwh1995/springcloud-eureka.git']]
+            userRemoteConfigs: [[url: "${project_url}]]
         ])
         echo '完成从git检出代码...'
     }
