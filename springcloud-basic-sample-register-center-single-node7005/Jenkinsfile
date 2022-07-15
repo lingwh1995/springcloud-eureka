@@ -4,7 +4,7 @@ node {
        echo 'setp 1....'
     }
     stage('Build') {
-        echo 'setp 2....'
+        echo 'setp 2222....'
     }
     stage('Results') {
         echo 'setp 3....'
