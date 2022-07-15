@@ -13,6 +13,7 @@ node {
         ])
         echo '完成从git检出代码...'
     }
+
     stage('Build') {
         echo 'setp 2222....'
     }
