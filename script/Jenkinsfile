@@ -2,11 +2,11 @@
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 //定义deploy.sh的使用的docker-compose.yml文件的名称，不同的项目这个文件的名称不同
 def docker_compose_yml_name = 'springcloud-eureka.yml'
-
+def jekins_ip = '192.168.0.5'
 node {
     echo '开始执行自动化...'
     /*指定在那台Jenkins节点上运行*/
-    agent { label '192.168.0.5'}
+    agent { label '${jekins_ip}'}
 
     /*从远程仓库检出代码*/
     stage('从远程仓库检出代码') {
@@ -47,13 +47,13 @@ node {
             publishers:
                 [
                     sshPublisherDesc(
-                        configName: '192.168.0.4',
+                        configName: 'master',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: '/devops-script/deploy.sh ${docker_compose_yml_name}',
-                                execTimeout: 120000,
+                                execCommand: "/devops-script/deploy.sh docker-compose.yml",
+                                execTimeout: 500000,
                                 flatten: false,
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
