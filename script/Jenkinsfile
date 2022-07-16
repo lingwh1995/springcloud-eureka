@@ -49,7 +49,7 @@ node {
             publishers:
                 [
                     sshPublisherDesc(
-                        configName: 'docker_machine',
+                        configName: '192.168.0.4',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: false,
