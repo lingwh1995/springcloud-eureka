@@ -123,7 +123,10 @@
         firewall-cmd --zone=trusted --add-source=172.17.0.3/16 --permanent
         firewall-cmd --zone=trusted --add-source=127.0.0.1/8 --permanent
         firewall-cmd --reload
-5.注意事项:上传到Harbo私服时,不用在maven的settings.xml中任何配置
+5.注意事项:
+    1.上传到Harbo私服时,不用在maven的settings.xml中任何配置
+    2.一定要先在harbor中创建项目，不然会报错
+        unauthorized: project springcloud-eureka not found: project springcloud-eureka not found
 5.故障排查
     #1./etc/docker/daemon.json下是否添加了对某个私服地址的信任
     #2.使用的端口服务器是否开放了
