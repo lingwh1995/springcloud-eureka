@@ -20,74 +20,76 @@
     	        访问gitee，进入到指定的项目->管理->WebHook->填写上面得到的URL和密码
     4>.测试持续集成效果
         提交代码，测试是否会触发jekins项目自动构建
-2.推送到私服后使用 Publish Over SSH 实现将镜像自动发布到docker容器中
+2.提交代码后后使用 Publish Over SSH 实现将镜像自动发布到docker容器中
     1>.工作原理
         提交代码后触发远程服务器的shell脚本执行，shell脚本会调用docker-compose.yml来实现推送到私服后将镜像自动发布到docker容器中
     2>.具体步骤
+        进入192.168.0.4机器(存放shell脚本的机器)
+            创建devops-script，在devops-script中创建docker-compose文件夹
+                cd / && mkdir devops-script && cd devops-script && mkdir docker-compose-home
+            创建deploy.sh
+                vim deploy.sh
+            内容如下:
+                #!/bin/sh
+
+                #定义输出日志的函数
+                function log() {
+                   echo -e "$(date '+%Y-%m-%d %H:%M:%S') $@"
+                }
+
+                #获取当前shell脚本所在的目录
+                SHELL_SCRIPT_WORK_DIR=$(pwd)
+                #获取docker编排文件名称，不同的模块docker编排文件的名称是不同的
+                #接收外部参数docker编排文件的名称,并赋值给DOCKER_COMPOSE_FILE_NAME这个变量
+                DOCKER_COMPOSE_FILE_NAME=$1
+                #拼接docker编排文件的全路径名=shell脚本所在的目录/docker-compose-home/具体的docker编排文件名称
+                DOCKER_COMPOSE_FILE_FULL_PATH_NAME="${SHELL_SCRIPT_WORK_DIR}/docker-compose-home/${DOCKER_COMPOSE_FILE_NAME}"
+                #创建日志文件夹
+                mkdir ${SHELL_SCRIPT_WORK_DIR}/logs
+                #拼接日志文件全路径名=shell脚本所在的目录/logs/具体的docker编排文件名称`date +'%Y-%m-%d'`.log
+                DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME=${SHELL_SCRIPT_WORK_DIR}/logs/${DOCKER_COMPOSE_FILE_NAME}-`date +'%Y-%m-%d'`.log
+                #删除旧的日志文件
+                rm -rf ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                #创建新的日志文件
+                touch ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+
+                log '开始执行自动化编排....................\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+
+
+                log '自动化编排步骤一....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                log '开始执行-> 校验docker编排文件['${DOCKER_COMPOSE_FILE_NAME}']的配置是否正确...'  >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                <<*
+                 #1.校验docker编排文件的配置是否正确
+                *
+                docker-compose -f ${DOCKER_COMPOSE_FILE_FULL_PATH_NAME} config
+                log '完成执行-> 校验docker编排文件['${DOCKER_COMPOSE_FILE_NAME}']的配置是否正确...\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+
+
+                log '自动化编排步骤二....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                log '开始执行-> 停止正在运行的容器->删除容器->删除镜像...' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                <<*
+                 #1.停止docker编排文件中包含的所有容器
+                 #2.删除docker编排文件中包含的所有容器
+                 #3.删除docker编排文件中包含的所有镜像
+                *
+                log docker-compose -f ${DOCKER_COMPOSE_FILE_FULL_PATH_NAME} down --rmi all
+                log '完成执行->停止正在运行的容器->删除容器->删除镜像...\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+
+
+                log '自动化编排步骤三....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                log '开始执行-> 从远程仓库或者私服拉取镜像->按照顺序启动镜像...' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+                <<*
+                 #1.从远程仓库或者私服中拉取docker-compose.yml中定义的所有镜像到本地
+                 #2.按照docker-compose.yml中定义的顺序为所有的镜像创建容器并启动
+                *
+                docker-compose -f ${DOCKER_COMPOSE_FILE_FULL_PATH_NAME} up -d
+                log '完成执行-> 从远程仓库或者私服拉取镜像->按照顺序启动镜像...\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+
+
+                log '完成执行自动化编排....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
+
+            给脚本赋予可执行权限
+                chmod +x deploy.sh
+
 3.生成流水线脚本
 2.提交到私服后自动发布到docker
-#创建devops-script，在devops-script中创建docker-compose文件夹
-cd / && mkdir devops-script && cd devops-script && mkdir docker-compose-home
-#创建deploy.sh
-vim deploy.sh
-内容如下:
-#!/bin/sh
-
-#定义输出日志的函数
-function log() {
-   echo -e "$(date '+%Y-%m-%d %H:%M:%S') $@"
-}
-
-#获取当前shell脚本所在的目录
-SHELL_SCRIPT_WORK_DIR=$(pwd)
-#获取docker编排文件名称，不同的模块docker编排文件的名称是不同的
-#接收外部参数docker编排文件的名称,并赋值给DOCKER_COMPOSE_FILE_NAME这个变量
-DOCKER_COMPOSE_FILE_NAME=$1
-#拼接docker编排文件的全路径名=shell脚本所在的目录/docker-compose-home/具体的docker编排文件名称
-DOCKER_COMPOSE_FILE_FULL_PATH_NAME="${SHELL_SCRIPT_WORK_DIR}/docker-compose-home/${DOCKER_COMPOSE_FILE_NAME}"
-#创建日志文件夹
-mkdir ${SHELL_SCRIPT_WORK_DIR}/logs
-#拼接日志文件全路径名=shell脚本所在的目录/logs/具体的docker编排文件名称`date +'%Y-%m-%d'`.log
-DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME=${SHELL_SCRIPT_WORK_DIR}/logs/${DOCKER_COMPOSE_FILE_NAME}-`date +'%Y-%m-%d'`.log
-#删除旧的日志文件
-rm -rf ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-#创建新的日志文件
-touch ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-
-log '开始执行自动化编排....................\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-
-
-log '自动化编排步骤一....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-log '开始执行-> 校验docker编排文件['${DOCKER_COMPOSE_FILE_NAME}']的配置是否正确...'  >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-<<*
- #1.校验docker编排文件的配置是否正确
-*
-docker-compose -f ${DOCKER_COMPOSE_FILE_FULL_PATH_NAME} config
-log '完成执行-> 校验docker编排文件['${DOCKER_COMPOSE_FILE_NAME}']的配置是否正确...\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-
-
-log '自动化编排步骤二....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-log '开始执行-> 停止正在运行的容器->删除容器->删除镜像...' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-<<*
- #1.停止docker编排文件中包含的所有容器
- #2.删除docker编排文件中包含的所有容器
- #3.删除docker编排文件中包含的所有镜像
-*
-log docker-compose -f ${DOCKER_COMPOSE_FILE_FULL_PATH_NAME} down --rmi all
-log '完成执行->停止正在运行的容器->删除容器->删除镜像...\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-
-
-log '自动化编排步骤三....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-log '开始执行-> 从远程仓库或者私服拉取镜像->按照顺序启动镜像...' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-<<*
- #1.从远程仓库或者私服中拉取docker-compose.yml中定义的所有镜像到本地
- #2.按照docker-compose.yml中定义的顺序为所有的镜像创建容器并启动
-*
-docker-compose -f ${DOCKER_COMPOSE_FILE_FULL_PATH_NAME} up -d
-log '完成执行-> 从远程仓库或者私服拉取镜像->按照顺序启动镜像...\n' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-
-
-log '完成执行自动化编排....................' >> ${DOCKER_COMPOSE_LOG_FILE_FULL_PATH_NAME}
-
-#给脚本赋予可执行权限
-chmod +x deploy.sh
