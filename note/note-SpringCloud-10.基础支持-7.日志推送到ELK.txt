@@ -1,75 +1,4 @@
-1.ELK搭建
-    1>.安装Docker
-        # yum源指定
-        sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-        # 安装docker
-        sudo yum -y install docker-ce
-        #启动dokcer
-        sudo systemctl start docker
-    2>.使用阿里云镜像加速
-        vi /etc/docker/daemon.json
-        #加入如下内容
-        {
-          "registry-mirrors": ["https://5pfmrxk8.mirror.aliyuncs.com"]
-        }
-    3>重启Docker.
-        systemctl restart docker
-    4>.安装ELK服务器
-        # 下载elk镜像
-        docker pull sebp/elk:6.8.22
-        # 启动ELK容器 ，指定最小内存和最大内存，并映射相关端口
-        docker run --name elk --restart always -d -p 5601:5601 -p 9200:9200 -p 5044:5044 -e ES_MIN_MEM=1024m -e ES_MAX_MEM=2048 sebp/elk:6.8.22
-        # centos7开放端口,并且重新载入端口
-
-        #5601
-        firewall-cmd --add-port=5601/tcp --permanent
-        firewall-cmd --reload
-        #9200
-        firewall-cmd --add-port=9200/tcp --permanent
-        firewall-cmd --reload
-        #5044
-        firewall-cmd --add-port=5044/tcp --permanent
-        firewall-cmd --reload
-
-    5.访问Kibana
-        192.168.0.4:5601
-    6.进入ELK中进行配置
-        # 进入到ELK容器中
-        docker exec -it elk /bin/bash
-        #修改logstash配置,把下面内容粘贴进去
-        vim /etc/logstash/conf.d/02-beats-input.conf
-
-        input{
-            tcp{
-                host => "0.0.0.0"
-                port => 5044
-                codec=> json_lines
-            }
-        }
-        output{
-            elasticsearch{
-                hosts => ["192.168.0.4:9200"]
-                action => "index"
-                index => "%{[appName]}-%{+YYYY.MM.dd}"
-            }
-        }
-
-        配置说明:
-            input代表数据输入配置 ， logstatsh的开放端口是 5044
-            output代表数据输出配置，输出到elasticsearch, hosts是es的地址192.168.0.4:9200
-    7.然后退出容器 ： exit ，重启ELK容器
-        docker restart elk
-    8.当把docker和centos7的冲突解决后,需要让centos放行elk(具体是es)的部署地址
-        #查看容器详细信息
-        docker inspect 容器id
-        #查找到elk(具体是es)容器的ip,假设为172.17.0.2
-        #执行放行操作
-        firewall-cmd --zone=trusted --add-source=172.17.0.2/16 --permanent
-        #重新载入防火墙配置
-        firewall-cmd --reload
-        #重启防火墙
-        systemctl restart firewalld
-2.微服务集成ELK
+1..微服务集成ELK
     1>.pom.xml中添加
         <dependency>
             <groupId>net.logstash.logback</groupId>
@@ -101,25 +30,11 @@
             </root>
 
         </configuration>
-3.测试效果
+2.测试效果
     启动程序进行访问，程序就会把日志自动发送到 192.168.0.4:5044 服务器中。通过kibana可视化工具进行分析。
     这里我们点击：Discover ->Create Index pattern ->打开 Include System ->设置index pattern值为*
     ->点击Next Step ->选择@timestamp ->点击Create Index Pattern ->再次点击Discover 就可以看到日志数据
-4.本教程网址:https://blog.csdn.net/u014494148/article/details/124260528
-6.Docker启动ELK报错/或一直重启故障解决
-    错误日志：max virtual memory areas vm.max_map_count [65530] is too low, increase to at least
-            或:无法 启动
-    在宿主机执行：sudo sysctl -w vm.max_map_count=262144
-    docker 命令增加参数：  -e ES_JAVA_OPTS="-Xms1g -Xmx1g"
-
-    #修改文件
-    sudo vim /etc/sysctl.conf
-    #添加参数
-    vm.max_map_count = 262144
-    #重新加载/etc/sysctl.conf配置
-    sysctl -p
-7.特别注意
-    logback.xml中配置的logstash地址是在bootstrap.yml中配置的
+3.本教程网址:https://blog.csdn.net/u014494148/article/details/124260528
 
 
 
