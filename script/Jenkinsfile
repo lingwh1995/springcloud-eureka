@@ -1,7 +1,7 @@
 //定义项目地址
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 //定义deploy.sh的使用的docker-compose.yml文件的名称，不同的项目这个文件的名称不同
-def docker_compose_yml_name = 'docker-compose-springcloud-eureka.yml'
+def docker_compose_yml_name = 'springcloud-eureka.yml'
 
 node {
     echo '开始执行自动化...'
