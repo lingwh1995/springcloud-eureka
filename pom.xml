@@ -234,12 +234,13 @@
                 <!--test环境docker私服连接信息(vmware提供的私服的harbor私服):开始-->
                 <docker.registry.uri>192.168.0.4:5001</docker.registry.uri>
                 <docker.registry.username>admin</docker.registry.username>
-                <docker.registry.password>Harbor12345</docker.registry.password>
+                <docker.registry.password>123456</docker.registry.password>
                 <!--dev环境docker私服连接信息(vmware提供的私服的harbor私服):结束-->
                 <!--dev环境docker部署地址:端口-->
                 <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
         </profile>
+
 
         <!--生产环境-->
         <profile>
@@ -268,7 +269,7 @@
                 <!--rancher环境docker私服连接信息(vmware提供的私服的harbor私服):开始-->
                 <docker.registry.uri>192.168.0.4:5001</docker.registry.uri>
                 <docker.registry.username>admin</docker.registry.username>
-                <docker.registry.password>Harbor12345</docker.registry.password>
+                <docker.registry.password>123456</docker.registry.password>
                 <!--rancher环境docker私服连接信息(vmware提供的私服的harbor私服):结束-->
                 <!--rancher环境docker部署地址:端口-->
                 <docker.host>tcp://192.168.0.4:2375</docker.host>
