@@ -3,8 +3,7 @@
         vim /lib/systemd/system/docker.service
         其中ExecStart=后添加配置-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
     2>.刷新配置,重启Docker服务
-        systemctl daemon-reload
-        systemctl restart docker
+        systemctl daemon-reload && systemctl restart docker
     3>.启动私服刚才搭建好的私有仓库registry
         docker start registry容器ID
     4>.放行2375端口
