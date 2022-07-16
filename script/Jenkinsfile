@@ -54,7 +54,7 @@ node {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "${remote_shell_path} ${docker_compose_yml_name}",
+                                execCommand: '${remote_shell_path} ${docker_compose_yml_name}',
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
