@@ -2,6 +2,7 @@
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
 def remote_shell_path = '/devops-script/deploy.sh'
 def docker_compose_yml_name = 'docker-compose-springcloud-eureka.yml'
+
 node {
     echo '开始执行自动化...'
     /*指定在那台Jenkins节点上运行*/
