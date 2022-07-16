@@ -34,13 +34,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-    </dependencies>    <!--热部署需要加这个-->
+    </dependencies>
+
     <build>
         <plugins>
+            <!--热部署需要加这个-->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.6.4</version>
                 <executions>
                     <execution>
                         <goals>

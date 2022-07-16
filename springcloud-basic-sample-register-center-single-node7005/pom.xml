@@ -14,16 +14,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <!--默认私服的ip:端口-->
-        <default.registry>192.168.0.4:5000</default.registry>
-        <!--harbor私服的ip:端口-->
-        <harbor.registry>192.168.0.4:5001</harbor.registry>
-        <harbor.registry.username>admin</harbor.registry.username>
-        <harbor.registry.password>Harbor12345</harbor.registry.password>
-        <docker.registry>${default.registry}</docker.registry>
-        <!--docker部署地址:端口-->
-        <docker.dockerHost>tcp://192.168.0.4:2375</docker.dockerHost>
-        <!--设置项目端口-->
+        <!--设置当前服务端口-->
         <docker.container.port>7005</docker.container.port>
         <!--docker容器端口映射-->
         <docker.port.mapping>${docker.container.port}:${docker.container.port}</docker.port.mapping>
@@ -79,7 +70,17 @@
                     <addResources>true</addResources>
                 </configuration>
             </plugin>
-            <!--执行maven命令时执行删除jar包和复制jar包操作-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -116,13 +117,13 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
-                    <dockerHost>${docker.dockerHost}</dockerHost>
-                    <pushRegistry>${docker.registry}</pushRegistry>
+                    <dockerHost>${docker.host}</dockerHost>
+                    <pushRegistry>${docker.registry.uri}</pushRegistry>
                     <tagName>latest</tagName>
                     <!--harbor镜像仓库地址认证配置,用于私有registry认证-->
                     <authConfig>
-                        <username>${harbor.registry.username}</username>
-                        <password>${harbor.registry.password}</password>
+                        <username>${docker.registry.username}</username>
+                        <password>${docker.registry.password}</password>
                     </authConfig>
                     <images>
                         <image>

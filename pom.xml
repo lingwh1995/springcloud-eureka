@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <!--引入所有模块：开始-->
     <modules>
         <!--公共API-->
         <module>springcloud-api-commons</module>
@@ -79,8 +80,9 @@
         <module>springcloud-basic-sample-provider-cluster-node-payment8009</module>
         <module>springcloud-basic-sample-provider-cluster-node-payment8010</module>
     </modules>
+    <!--引入所有模块：结束-->
 
-    <!-- 统一管理jar包版本 -->
+    <!--统一定义依赖具体版本：开始 -->
     <properties>
         <!--依赖版本-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -99,19 +101,17 @@
         <io.seata.version>1.4.2</io.seata.version>
         <spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
         <net.logstash.logback.logstash-logback-encoder.version>5.2</net.logstash.logback.logstash-logback-encoder.version>
-        <!--docker私服地址:端口-->
-        <docker.registry>192.168.0.4:5000</docker.registry>
-        <!--docker部署地址:端口-->
-        <docker.dockerHost>tcp://192.168.0.4:2375</docker.dockerHost>
         <spring.boot.admin.version>2.2.1</spring.boot.admin.version>
 
         <!--插件版本-->
+        <org.springframework.boot.spring-boot-maven-plugin.version>2.2.2.RELEASE</org.springframework.boot.spring-boot-maven-plugin.version>
         <org.apache.maven.plugins.maven-resources-plugin.version>3.2.0</org.apache.maven.plugins.maven-resources-plugin.version>
         <io.fabric8.docker-maven-plugin.version>0.39.1</io.fabric8.docker-maven-plugin.version>
-        <org.springframework.boot.spring-boot-maven-plugin.version>2.2.2.RELEASE</org.springframework.boot.spring-boot-maven-plugin.version>
+        <org.apache.maven.plugins.maven-antrun-plugin.version>1.8</org.apache.maven.plugins.maven-antrun-plugin.version>
     </properties>
+    <!--统一定义依赖具体版本：结束 -->
 
-    <!-- 子模块继承之后，提供作用：锁定版本+子modlue不用写groupId和version  -->
+    <!--统一定义依赖版本：开始-->
     <dependencyManagement>
         <dependencies>
             <!--spring boot 2.2.2-->
@@ -206,8 +206,9 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <!--统一定义依赖版本：结束-->
 
-    <!--定义三种开发环境-->
+    <!--定义多种开发环境:开始-->
     <profiles>
         <profile>
             <!--不同环境的唯一id-->
@@ -215,6 +216,13 @@
             <properties>
                 <!--profile.active对应application.yml中的@profile.active@-->
                 <profile.active>dev</profile.active>
+                <!--dev环境docker私服连接信息(使用docker官方提供的私服):开始-->
+                <docker.registry.uri>192.168.0.4:5000</docker.registry.uri>
+                <docker.registry.username>docker</docker.registry.username>
+                <docker.registry.password>123456</docker.registry.password>
+                <!--dev环境docker私服连接信息(使用docker官方提供的私服):结束-->
+                <!--dev环境docker部署地址:端口-->
+                <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
             <activation>
                 <!--默认激活开发环境-->
@@ -227,6 +235,13 @@
             <id>test</id>
             <properties>
                 <profile.active>test</profile.active>
+                <!--test环境docker私服连接信息(vmware提供的私服的harbor私服):开始-->
+                <docker.registry.uri>192.168.0.4:5001</docker.registry.uri>
+                <docker.registry.username>admin</docker.registry.username>
+                <docker.registry.password>Harbor12345</docker.registry.password>
+                <!--dev环境docker私服连接信息(vmware提供的私服的harbor私服):结束-->
+                <!--dev环境docker部署地址:端口-->
+                <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
         </profile>
 
@@ -235,6 +250,13 @@
             <id>prod</id>
             <properties>
                 <profile.active>prod</profile.active>
+                <!--prod环境docker私服连接信息(使用docker官方提供的私服):开始-->
+                <docker.registry.uri>192.168.0.4:5000</docker.registry.uri>
+                <docker.registry.username>docker</docker.registry.username>
+                <docker.registry.password>123456</docker.registry.password>
+                <!--prod环境docker私服连接信息(使用docker官方提供的私服):结束-->
+                <!--prod环境docker部署地址:端口-->
+                <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
         </profile>
 
@@ -243,37 +265,46 @@
             <id>rancher</id>
             <properties>
                 <profile.active>rancher</profile.active>
+                <!--rancher环境docker私服连接信息(vmware提供的私服的harbor私服):开始-->
+                <docker.registry.uri>192.168.0.4:5001</docker.registry.uri>
+                <docker.registry.username>admin</docker.registry.username>
+                <docker.registry.password>Harbor12345</docker.registry.password>
+                <!--rancher环境docker私服连接信息(vmware提供的私服的harbor私服):结束-->
+                <!--rancher环境docker部署地址:端口-->
+                <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
         </profile>
     </profiles>
+    <!--定义多种开发环境:结束-->
 
-    <!--热部署需要加这个-->
+    <!--统一定义插件版本：开始-->
     <build>
-        <!--在这里统一插件版本-->
+        <!--spring-boot-maven-plugin插件-->
         <plugins>
-            <!--支持yaml读取pom的参数-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${org.apache.maven.plugins.maven-resources-plugin.version}</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <delimiters>
-                        <delimiter>@</delimiter>
-                    </delimiters>
-                    <useDefaultDelimiters>false</useDefaultDelimiters>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${io.fabric8.docker-maven-plugin.version}</version>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${org.springframework.boot.spring-boot-maven-plugin.version}</version>
             </plugin>
+            <!--支持yaml读取pom的参数-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven-resources-plugin.version}</version>
+            </plugin>
+            <!--执行maven命令时执行删除jar包和复制jar包操作-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven-antrun-plugin.version}</version>
+            </plugin>
+            <!--docker maven插件-->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${io.fabric8.docker-maven-plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
+    <!--统一定义插件版本：结束-->
 </project>
