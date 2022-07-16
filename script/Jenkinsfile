@@ -1,7 +1,5 @@
 //定义项目地址
 def project_url = 'https://gitee.com/lingwh1995/springcloud-eureka.git'
-//定义deploy.sh的位置
-def remote_shell_path = '/devops-script/deploy.sh'
 //定义deploy.sh的使用的docker-compose.yml文件的名称，不同的项目这个文件的名称不同
 def docker_compose_yml_name = 'docker-compose-springcloud-eureka.yml'
 
@@ -54,7 +52,7 @@ node {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: '${remote_shell_path} ${docker_compose_yml_name}',
+                                execCommand: '/devops-script/deploy.sh ${docker_compose_yml_name}',
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
