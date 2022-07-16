@@ -224,10 +224,6 @@
                 <!--dev环境docker部署地址:端口-->
                 <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
-            <activation>
-                <!--默认激活开发环境-->
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
 
         <!--测试环境-->
@@ -258,6 +254,10 @@
                 <!--prod环境docker部署地址:端口-->
                 <docker.host>tcp://192.168.0.4:2375</docker.host>
             </properties>
+            <activation>
+                <!--默认激活环境-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
 
         <!--rancher测试专用环境-->
