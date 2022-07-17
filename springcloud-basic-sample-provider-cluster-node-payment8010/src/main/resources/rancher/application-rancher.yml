@@ -2,7 +2,7 @@ server:
   port: 8010 #访问端口
 spring:
   application:
-    name: SPRINGCLOUD-BASIC-SAMPLE-PROVIDER-PAYMENT-SERVICE-CLUSTER-RANCHER1  #注意:服务名不要出现_
+    name: SPRINGCLOUD-BASIC-SAMPLE-PROVIDER-PAYMENT-SERVICE-CLUSTER-RANCHER  #注意:服务名不要出现_
   devtools:
     restart:
       enabled: true
