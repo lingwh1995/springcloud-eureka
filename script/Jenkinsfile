@@ -58,7 +58,7 @@ node {
                                 cleanRemote: false,
                                 excludes: '',
                                 execCommand: "${devops_script_path}/${devops_script_name} ${devops_script_path} ${docker_compose_yml_name}",
-                                execTimeout: 1000*60*15,
+                                execTimeout: 600000,
                                 flatten: false,
                                 makeEmptyDirs: false,
                                 noDefaultExcludes: false,
