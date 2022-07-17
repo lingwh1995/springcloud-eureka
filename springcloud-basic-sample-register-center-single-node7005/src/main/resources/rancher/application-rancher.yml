@@ -2,7 +2,7 @@ server:
   port: 7005 #访问端口
 spring:
   application:
-    name: SPRINGCLOUD-BASIC-SAMPLE-REGISTER-CENTER-SINGLE-NODE7005-RANCHER  #注意:服务名不要出现_
+    name: SPRINGCLOUD-BASIC-SAMPLE-REGISTER-CENTER-SINGLE-NODE7005-RANCHER1  #注意:服务名不要出现_
   devtools: #热部署开关
     restart:
       enabled: true
