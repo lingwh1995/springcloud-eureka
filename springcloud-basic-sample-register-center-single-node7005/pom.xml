@@ -181,7 +181,7 @@
                     <!--如果想在项目install时推送镜像到私服添加-->
                     <execution>
                         <id>push-image</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>push</goal>
                         </goals>
