@@ -127,6 +127,7 @@
                         <username>${docker.registry.username}</username>
                         <password>${docker.registry.password}</password>
                     </authConfig>
+                    <pushRegistry>${docker.registry.uri}</pushRegistry>
                     <pullRegistry>${docker.registry.uri}</pullRegistry>
                     <images>
                         <image>
