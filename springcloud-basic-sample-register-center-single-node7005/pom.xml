@@ -138,7 +138,7 @@
                                 也可将registry单独写在下面
                             -->
                             <!--<name>镜像名称:${docker.registry}/${project.parent.artifactId}/${project.name}</name>-->
-                            <name>${project.parent.artifactId}/${project.name}:latest</name>
+                            <name>${docker.registry.uri}/${project.parent.artifactId}/${project.name}:latest</name>
                             <registry>${docker.registry.uri}</registry>
                             <!--定义镜像构建行为-->
                             <build>
