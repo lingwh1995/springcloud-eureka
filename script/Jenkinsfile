@@ -11,6 +11,7 @@ def jekins_ip='192.168.0.5'
 
 node {
 
+
     echo '开始执行自动化...'
     /*指定在那台Jenkins节点上运行*/
     agent { label '${jekins_ip}'}
