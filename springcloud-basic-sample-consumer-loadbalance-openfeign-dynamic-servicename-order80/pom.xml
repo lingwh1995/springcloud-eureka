@@ -108,7 +108,7 @@
                     </execution>
                     <execution>
                         <id>copy-jar</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <configuration>
                             <tasks>
                                 <!-- 这是将当前模块下的target下的jar包copy到当前模块根目录下docker目录中-->
@@ -176,7 +176,7 @@
                     <!--如果想在项目install时构建镜像添加-->
                     <execution>
                         <id>build-image</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
@@ -184,7 +184,7 @@
                     <!--如果想在项目install时构建镜像添加-->
                     <execution>
                         <id>tag-image</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>tag</goal>
                         </goals>
@@ -192,7 +192,7 @@
                     <!--如果想在项目install时推送镜像到私服添加-->
                     <execution>
                         <id>push-image</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>push</goal>
                         </goals>
@@ -200,7 +200,7 @@
                     <!--如果想在项目install时推送镜像到私服后删除并docker中本地build的镜像添加-->
                     <execution>
                         <id>remove-image</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>remove</goal>
                         </goals>
