@@ -279,7 +279,6 @@
     </profiles>
     <!--定义多种开发环境:结束-->
 
-
     <!--统一定义插件版本：开始-->
     <build>
         <!--spring-boot-maven-plugin插件-->
