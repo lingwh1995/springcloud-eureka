@@ -127,8 +127,6 @@
                         <username>${docker.registry.username}</username>
                         <password>${docker.registry.password}</password>
                     </authConfig>
-                    <pushRegistry>${docker.registry.uri}</pushRegistry>
-                    <pullRegistry>${docker.registry.uri}</pullRegistry>
                     <images>
                         <image>
                             <!--显示日志的时候-->
@@ -141,6 +139,7 @@
                             -->
                             <!--<name>镜像名称:${docker.registry}/${project.parent.artifactId}/${project.name}</name>-->
                             <name>${project.parent.artifactId}/${project.name}:latest</name>
+                            <registry>${docker.registry.uri}</registry>
                             <!--定义镜像构建行为-->
                             <build>
                                 <!-- 指定dockerfile文件的位置-->
