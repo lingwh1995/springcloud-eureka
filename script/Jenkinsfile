@@ -8,6 +8,7 @@ def devops_script_name='deploy.sh'
 def docker_compose_yml_name = 'docker-compose-sample.yml'
 
 def jekins_ip='192.168.0.5'
+
 node {
     echo '开始执行自动化...'
     /*指定在那台Jenkins节点上运行*/
