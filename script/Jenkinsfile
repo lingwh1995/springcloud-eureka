@@ -1,8 +1,12 @@
-//定义项目地址
+//定义远程git仓库中项目的地址
 def project_url='https://gitee.com/lingwh1995/springcloud-eureka.git'
-def devops_sh_path='/devops-script/deploy.sh'
+//定义devops-script文件夹存放在linux机器上的位置
+def devops_script_path = '/devops-script'
+//定义devops-script文件夹中部署脚本的名称
+def devops_script_name='deploy.sh'
 //定义deploy.sh的使用的docker-compose.yml文件的名称，不同的项目这个文件的名称不同
-def docker_compose_yml_name = 'docker-compose.yml'
+def docker_compose_yml_name = 'docker-compose-sample.yml'
+
 def jekins_ip='192.168.0.5'
 node {
     echo '开始执行自动化...'
@@ -53,7 +57,7 @@ node {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "${devops_sh_path} ${docker_compose_yml_name}",
+                                execCommand: "${devops_script_path}/${devops_script_name} ${devops_script_path} ${docker_compose_yml_name}",
                                 execTimeout: 1000000,
                                 flatten: false,
                                 makeEmptyDirs: false,
