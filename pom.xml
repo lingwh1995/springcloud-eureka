@@ -256,7 +256,6 @@
             </properties>
         </profile>
 
-<!--dd-->
         <!--rancher测试专用环境-->
         <profile>
             <id>rancher</id>
