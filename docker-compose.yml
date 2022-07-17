@@ -14,14 +14,14 @@ services:
 
   eureka7005:
     restart: always
-    image: springcloud-eureka/springcloud-basic-sample-register-center-single-node7005:latest
+    image: ${DOCKER_REGISTRY_URL}/springcloud-eureka/springcloud-basic-sample-register-center-single-node7005:latest
     container_name: springcloud-eureka-eureka7005
     ports:
       - 7005:7005
 
   payment8010:
     restart: always
-    image: springcloud-eureka/springcloud-basic-sample-provider-cluster-node-payment8010:latest
+    image: ${DOCKER_REGISTRY_URL}/springcloud-eureka/springcloud-basic-sample-provider-cluster-node-payment8010:latest
     container_name: springcloud-eureka-payment8010
     ports:
       - 8010:8010
@@ -29,7 +29,7 @@ services:
       - mysql
 
   order80:
-    image: springcloud-eureka/springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80:latest
+    image: ${DOCKER_REGISTRY_URL}/springcloud-eureka/springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80:latest
     container_name: springcloud-eureka-order80
     restart: always
     ports:

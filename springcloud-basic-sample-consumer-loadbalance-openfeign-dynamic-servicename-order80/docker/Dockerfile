@@ -3,7 +3,9 @@ FROM java:8
 #用于指定持久化目录
 VOLUME /software
 #维护者信息
-MAINTAINER tianfeiyu
+MAINTAINER lingwh
+#docker私服地址
+ARG DOCKER_REGISTRY_URL
 # 将当前maven目录生成的文件复制到docker容器的/目录下
 COPY ${project.build.finalName}.jar app.jar
 # 指定docker容器启动时运行jar包
