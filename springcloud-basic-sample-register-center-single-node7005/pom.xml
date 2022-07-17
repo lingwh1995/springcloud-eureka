@@ -145,6 +145,7 @@
                                 <!-- 指定dockerfile文件的位置-->
                                 <dockerFile>${project.basedir}/docker/Dockerfile</dockerFile>
                             </build>
+
                             <!-- 定义容器启动行为-->
                             <run>
                                 <!--设置容器名，可采用通配符-->
