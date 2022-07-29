@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 /**
  * DEV环境测试用这个Controller,可以动态获取服务名
  */
+
 @RestController
 @Slf4j
 public class OrderConsumerController {
