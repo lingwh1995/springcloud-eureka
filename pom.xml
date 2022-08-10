@@ -242,7 +242,7 @@
             </properties>
         </profile>
 
-        <!--生产环境11-->
+        <!--生产环境-->
         <profile>
             <id>prod</id>
             <properties>
