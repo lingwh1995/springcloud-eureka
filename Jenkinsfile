@@ -28,20 +28,20 @@ pipeline {
       steps {
         echo '开始触发books项目自动拉取代码...'
         echo '${GIT_COMMIT_MSG}'
-        sh 'curl -u pt240hr5ts6t\:df61408cd010ca57dd252761885b64830c389c05 \
+        sh "curl -u pt240hr5ts6t:df61408cd010ca57dd252761885b64830c389c05 \
                    -v -X POST  'https://lingwh.coding.net/api/cci/job/1474425/trigger' \
-                   -H 'Content-Type\: application/json' \
+                   -H 'Content-Type: application/json' \
                    -d '
                     {
-                    "ref"\: "master",
-                    "envs"\: [
+                    "ref": "master",
+                    "envs": [
                         {
-                            "name"\: "GITEE_TOKEN",
-                            "value"\: "04cacc5f135e93b1ed679462a55260b7",
-                            "sensitive"\: 0
+                            "name": "GITEE_TOKEN",
+                            "value": "04cacc5f135e93b1ed679462a55260b7",
+                            "sensitive": 0
                         }
                     ]
-                }''
+                }'"
         echo '完成触发books项目自动拉取代码...'
       }
     }
