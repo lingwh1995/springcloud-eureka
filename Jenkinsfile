@@ -13,7 +13,7 @@ pipeline {
       }
     }
 
-    stage('推送部署11') {
+    stage('推送部署22') {
       steps {
         echo '正在推送文件...'
         echo '${GIT_COMMIT_MSG}'
