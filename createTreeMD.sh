@@ -3,7 +3,7 @@
 #安装tree命令软件包
 function beforeCreateTreeMD() {
     #ubuntu环境中安装tree
-    apt-get install tree
+    #apt-get install tree
     #centos环境中安装tree
     yum -y install tree
 }
