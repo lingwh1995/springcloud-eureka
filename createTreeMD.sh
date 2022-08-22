@@ -1,10 +1,17 @@
 #!/bin/bash
+
 #安装tree命令软件包
 function beforeCreateTreeMD() {
     #ubuntu环境中安装tree
     apt-get install tree
     #centos环境中安装tree
     yum -y install tree
+}
+
+#提交自动生成的tree.md
+function afterCreateTreeMD() {
+    git add .
+    git commit -m '自动生成tree.md'
 }
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
