@@ -3,7 +3,7 @@
 #安装tree命令软件包
 function beforeCreateTreeMD() {
     #ubuntu环境中安装tree
-    #apt-get install tree
+    apt-get install tree
     #centos环境中安装tree
     yum -y install tree
 }
@@ -20,10 +20,13 @@ function createTreeMDForChildDir() {
     fileName=$item
     if [ -d $fileName ]
     then
-	#删除旧的tree.md文件
-	rm -rf $fileName/tree.md
-	#创建新的tree.md文件
-	tree $fileName > $fileName/tree.md
+        if [ $fileName != "note" ]
+        then
+            #删除旧的tree.md文件
+            rm -rf $fileName/tree.md
+            #创建新的tree.md文件
+            tree $fileName > $fileName/tree.md
+        fi
     fi
     done
 }
