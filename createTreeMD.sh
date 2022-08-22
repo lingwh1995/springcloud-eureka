@@ -57,7 +57,7 @@ function createTreeMD(){
     createTreeMDForChildDir
     createTreeMDForCurrentDir
     #当前shell所在文件夹名称
-    PROJECT_DIR_NAME=$(basename $0)
+    PROJECT_DIR_NAME="${project_path##*/}"
     formatTreeMD $PROJECT_DIR_NAME
     afterCreateTreeMD
 }
