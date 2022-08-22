@@ -44,6 +44,7 @@ function createTreeMD(){
     createTreeMDForChildDir
     createTreeMDForCurrentDir
     replaceDotToBaseDirName
+    afterCreateTreeMD
 }
 
 createTreeMD
