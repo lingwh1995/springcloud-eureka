@@ -11,10 +11,7 @@ function beforeCreateTreeMD() {
 
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
-    echo =========================
-    echo $1
-    echo =========================
-    for item in `ls $1`
+    for item in `ls`
     do
     fileName=$item
     if [ -d $fileName ]
@@ -37,11 +34,11 @@ function createTreeMDForCurrentDir(){
 
 #替换当前目录下tree.md第一行.为当为文件夹名称
 function formatTreeMD(){
-    echo -------------------------
+    echo --------------------------
     echo $1
-    echo -------------------------
+    echo --------------------------
     #替换当前文件夹下tree.md文件的第一行的.为当前文件夹名称
-    sed -i "1,/./c\springcloud-eureka" tree.md
+    sed -i "1,/./c\'"$1"'" tree.md
     #删除最后一行
     sed -i '$d' tree.md
 }
@@ -59,7 +56,9 @@ function createTreeMD(){
     beforeCreateTreeMD
     createTreeMDForChildDir
     createTreeMDForCurrentDir
-    formatTreeMD
+    #当前shell所在文件夹名称
+    PROJECT_DIR_NAME=$(basename $0)
+    formatTreeMD $PROJECT_DIR_NAME
     afterCreateTreeMD
 }
 
