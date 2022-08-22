@@ -21,14 +21,14 @@ function createTreeMDForChildDir() {
     if [ -d $fileName ]
     then
         #创建新的tree.md文件
-        tree $fileName -C > $fileName/tree.md
+        tree $fileName > $fileName/tree.md
     fi
     done
 }
 #为当前目录创建tree.md文件
 function createTreeMDForCurrentDir(){
     #创建新的tree.md文件
-    tree -C -I 'note|tree.md|createTreeMD.sh' > tree.md
+    tree -I 'note|tree.md|createTreeMD.sh' > tree.md
 }
 #替换当前目录下tree.md第一行.为当为文件夹名称
 function replaceDotToBaseDirName(){
