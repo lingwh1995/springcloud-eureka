@@ -11,6 +11,9 @@ function beforeCreateTreeMD() {
 
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
+    echo =========================
+    echo $1
+    echo =========================
     for item in `ls $1`
     do
     fileName=$item
