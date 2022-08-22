@@ -15,19 +15,15 @@ function afterCreateTreeMD() {
 }
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
-    for item in `ls $1`
+    for item in `ls $1 -I 'note'`
     do
     fileName=$item
     if [ -d $fileName ]
     then
-        echo '当前处理的文件夹的名称: '$fileName
-        if [ "$fileName" != "note" ]
-        then
-            #删除旧的tree.md文件
-            rm -rf $fileName/tree.md
-            #创建新的tree.md文件
-            tree $fileName > $fileName/tree.md
-        fi
+        #删除旧的tree.md文件
+        rm -rf $fileName/tree.md
+        #创建新的tree.md文件
+        tree $fileName > $fileName/tree.md
     fi
     done
 }
