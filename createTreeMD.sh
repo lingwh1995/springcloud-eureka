@@ -15,7 +15,7 @@ function afterCreateTreeMD() {
 }
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
-    for item in `ls $1 -I note`
+    for item in `ls -I note -I createTreeMD.sh`
     do
     fileName=$item
     if [ -d $fileName ]
