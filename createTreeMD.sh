@@ -35,7 +35,7 @@ function createTreeMDForCurrentDir(){
 #替换当前目录下tree.md第一行.为当为文件夹名称
 function formatTreeMD(){
     #替换当前文件夹下tree.md文件的第一行的.为当前文件夹名称
-    sed -i "1,/./c\$1" tree.md
+    sed -i '1,/./c\'"$1"'' tree.md
     #删除最后一行
     sed -i '$d' tree.md
 }
