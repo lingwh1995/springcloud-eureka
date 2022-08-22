@@ -1,4 +1,8 @@
 #!/bin/bash
+#安装tree命令软件包
+function beforeCreateTreeMD() {
+    apt-get install tree
+}
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
     for item in `ls $1`
@@ -25,6 +29,11 @@ function replaceDotToBaseDirName(){
      #替换当前文件夹下tree.md文件的第一行的.为当前文件夹名称	
      sed -i "1,/./c\springcloud-eureka" tree.md
 }
-createTreeMDForChildDir
-createTreeMDForCurrentDir
-replaceDotToBaseDirName
+function createTreeMD(){
+    beforeCreateTreeMD
+    createTreeMDForChildDir
+    createTreeMDForCurrentDir
+    replaceDotToBaseDirName
+}
+
+createTreeMD
