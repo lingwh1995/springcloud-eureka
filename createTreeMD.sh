@@ -4,7 +4,7 @@ function beforeCreateTreeMD() {
     #ubuntu环境中安装tree
     apt-get install tree
     #centos环境中安装tree
-    yum install tree
+    yum -y install tree
 }
 #为当前目录中的所有子模块创建tree.md文件
 function createTreeMDForChildDir() {
