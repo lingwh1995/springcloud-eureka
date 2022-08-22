@@ -58,5 +58,5 @@ function createTreeMD(){
 }
 
 #当前shell所在文件夹名称
-PROJECT_DIR_NAME='springcloud-eureka'
+PROJECT_DIR_NAME=springcloud-eureka
 createTreeMD $PROJECT_DIR_NAME
