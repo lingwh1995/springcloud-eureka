@@ -25,6 +25,7 @@ function createTreeMDForChildDir() {
     fi
     done
 }
+
 #为当前目录创建tree.md文件
 function createTreeMDForCurrentDir(){
     #创建新的tree.md文件
