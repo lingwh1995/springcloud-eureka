@@ -20,7 +20,7 @@ function createTreeMDForChildDir() {
     fileName=$item
     if [ -d $fileName ]
     then
-        if [ $fileName != "note" ]
+        if [ ! $fileName == "note" ]
         then
             #删除旧的tree.md文件
             rm -rf $fileName/tree.md
