@@ -17,7 +17,7 @@ function createTreeMDForChildDir() {
     if [ -d $fileName ]
     then
         #创建新的tree.md文件
-        tree $fileName -I 'tree.md' --dirsfirst > $fileName/tree.
+        tree $fileName -I 'tree.md' --dirsfirst > $fileName/tree.md
         #替换`为•
         sed -i 's/`/•/g`' tree.md
         #删除最后三行
