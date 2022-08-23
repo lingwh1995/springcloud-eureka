@@ -3,7 +3,7 @@
 #安装tree命令软件包
 function beforeCreateTreeMD() {
     #ubuntu环境中安装tree
-    apt-get install tree
+    apt-get -y install tree
     #centos环境中安装tree
     yum -y install tree
 }
@@ -17,7 +17,7 @@ function createTreeMDForChildDir() {
     if [ -d $fileName ]
     then
         #创建新的tree.md文件
-        tree $fileName -I 'tree.md' > $fileName/tree.md
+        tree $fileName -I 'tree.md' -A --dirsfirst > $fileName/tree.md
         #删除最后三行
         sed -i '$d' $fileName/tree.md
         sed -i '$d' $fileName/tree.md
@@ -30,7 +30,7 @@ function createTreeMDForChildDir() {
 #为当前目录创建tree.md文件
 function createTreeMDForCurrentDir(){
     #创建新的tree.md文件
-    tree -I 'note|tree.md|createTreeMD.sh|tree.md' > tree.md
+    tree -I 'note|tree.md|createTreeMD.sh|tree.md' -A --dirsfirst > tree.md
 }
 
 
