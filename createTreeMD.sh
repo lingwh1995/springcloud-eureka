@@ -18,13 +18,15 @@ function createTreeMDForChildDir() {
     then
         #创建新的tree.md文件
         tree $fileName -I 'tree.md' --dirsfirst > $fileName/tree.md
-        #获取结束删除的行数
-        END_LINE_NUMBER=`cat $fileName/tree.md | wc -l`
-        #获取开始删除的行数
-        START_LINE_NUMBER=$[$END_LINE_NUMBER-1]
-        sed -i ''"$START_LINE_NUMBER"','"$END_LINE_NUMBER"'d' $fileName/tree.md
         #替换`为•
         sed -i 's/`/•/g' $fileName/tree.md
+        #获取结束删除的行数
+        END_LINE_NUMBER=`cat $fileName/tree.md | wc -l`
+        LAST_LINE_STR=`cat $fileName/tree.md | tail -3| head -n 1`
+        #获取开始删除的行数
+        START_LINE_NUMBER=$[$END_LINE_NUMBER-2]
+        sed -i ''"$START_LINE_NUMBER"','"$END_LINE_NUMBER"'d' $fileName/tree.md
+        sed -i '$i '"$LAST_LINE_STR"'' $fileName/tree.md
     fi
     done
 }
@@ -41,13 +43,15 @@ function createTreeMDForCurrentDir(){
 function formatTreeMD(){
     #替换当前文件夹下tree.md文件的第一行的.为当前文件夹名称
     sed -i '1,/./c\'"$1"'' tree.md
+    #替换`为•
+    sed -i 's/`/•/g' tree.md
     #获取结束删除的行数
     END_LINE_NUMBER=`cat tree.md | wc -l`
+    LAST_LINE_STR=`cat tree.md | tail -3| head -n 1`
     #获取开始删除的行数
     START_LINE_NUMBER=$[$END_LINE_NUMBER-2]
     sed -i ''"$START_LINE_NUMBER"','"$END_LINE_NUMBER"'d' tree.md
-    #替换`为•
-    sed -i 's/`/•/g' tree.md
+    sed -i '$i '"$LAST_LINE_STR"'' tree.md
 }
 
 
