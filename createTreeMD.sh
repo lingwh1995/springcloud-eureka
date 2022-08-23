@@ -18,7 +18,9 @@ function createTreeMDForChildDir() {
     then
         #创建新的tree.md文件
         tree $fileName > $fileName/tree.md
-        #删除最后一行
+        #删除最后三行
+        sed -i '$d' $fileName/tree.md
+        sed -i '$d' $fileName/tree.md
         sed -i '$d' $fileName/tree.md
     fi
     done
@@ -36,7 +38,9 @@ function createTreeMDForCurrentDir(){
 function formatTreeMD(){
     #替换当前文件夹下tree.md文件的第一行的.为当前文件夹名称
     sed -i '1,/./c\'"$1"'' tree.md
-    #删除最后一行
+    #删除最后三行
+    sed -i '$d' tree.md
+    sed -i '$d' tree.md
     sed -i '$d' tree.md
 }
 
