@@ -60,7 +60,7 @@ function afterCreateTreeMD() {
 }
 
 
-#门面模式,封装所有操作
+#门面模式,一次封装所有操作
 function createTreeMD(){
     beforeCreateTreeMD
     createTreeMDForChildDir
