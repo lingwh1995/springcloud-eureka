@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 /**
  * 判断是否登录的Filter
  */
-//@Component    //注掉这行代码,这样过滤器就不会生气了
+@Component    //注掉这行代码,这样过滤器就不会生效了
 @Slf4j
 public class LoginFilter implements GlobalFilter,Ordered {
 

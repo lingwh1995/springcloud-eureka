@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
  */
 @EnableEurekaClient
 @SpringBootApplication
-@EnableCircuitBreaker//服务提供方端启用Hystrix
+@EnableCircuitBreaker//服务提供端启用Hystrix
 public class PaymentServiceProviderHystrixClusterNode8004 {
 
     public static void main(String[] args) {

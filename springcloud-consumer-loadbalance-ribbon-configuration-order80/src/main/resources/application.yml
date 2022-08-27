@@ -23,12 +23,12 @@ eureka:
     prefer-ip-address: false #访问路径可以显示IP地址，点击Eureka仪表盘中Instances currently registered with Eureka.Status显示的内容地址栏是否显示IP地址
 
 #某个/某些服务的Ribbon配置
-SPRINGCLOUD-PROVIDER-PAYMENT-SERVICE-CLUSTER: #服务提供方名称
+SPRINGCLOUD-PROVIDER-PAYMENT-SERVICE-CLUSTER: #服务提供端名称
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule   #Ribbon负载均衡规则类所在的路径,自带七种规则,也可以是自定位规则的类所在的路径
 
-#服务提供方信息
+#服务提供端信息
 service:
   provider:
-    name: SPRINGCLOUD-PROVIDER-PAYMENT-SERVICE-CLUSTER  #服务提供方名称
-    url: http://${service.provider.name} #服务提供方调用地址
+    name: SPRINGCLOUD-PROVIDER-PAYMENT-SERVICE-CLUSTER  #服务提供端名称
+    url: http://${service.provider.name} #服务提供端调用地址
