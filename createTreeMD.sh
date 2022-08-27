@@ -25,8 +25,13 @@ function createTreeMDForChildDir() {
         #获取开始删除的行数
         START_LINE_NUMBER=$[$END_LINE_NUMBER-1]
         sed -i ''"$START_LINE_NUMBER"','"$END_LINE_NUMBER"'d' $fileName/tree.md
+        #写入Frontmatter
+        echo '---' > $fileName/tree.md.bak
+        echo 'article: false' >> $fileName/tree.md.bak
+        echo 'timeline: false' >> $fileName/tree.md.bak
+        echo '---' >> $fileName/tree.md.bak
         #删除md文本中最后一个字符，就是结尾符
-        head -c -1 $fileName/tree.md > $fileName/tree.md.bak
+        head -c -1 $fileName/tree.md >> $fileName/tree.md.bak
         mv $fileName/tree.md.bak $fileName/tree.md
     fi
     done
@@ -46,6 +51,11 @@ function createTreeMDForCurrentDir(){
     #获取开始删除的行数
     START_LINE_NUMBER=$[$END_LINE_NUMBER-1]
     sed -i ''"$START_LINE_NUMBER"','"$END_LINE_NUMBER"'d' tree.md
+    #写入Frontmatter
+    echo '---' > $fileName/tree.md.bak
+    echo 'article: false' >> $fileName/tree.md.bak
+    echo 'timeline: false' >> $fileName/tree.md.bak
+    echo '---' >> $fileName/tree.md.bak
     #删除md文本中最后一个字符，就是结尾符
     head -c -1 tree.md > tree.md.bak
     mv tree.md.bak tree.md
