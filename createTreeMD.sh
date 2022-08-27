@@ -57,7 +57,7 @@ function createTreeMDForCurrentDir(){
     echo 'timeline: false' >> $fileName/tree.md.bak
     echo '---' >> $fileName/tree.md.bak
     #删除md文本中最后一个字符，就是结尾符
-    head -c -1 tree.md > tree.md.bak
+    head -c -1 tree.md >> tree.md.bak
     mv tree.md.bak tree.md
 }
 
