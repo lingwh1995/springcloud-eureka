@@ -3,7 +3,7 @@ package org.openatom.springcloud.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.openatom.springcloud.entities.CommonResult;
 import org.openatom.springcloud.entities.Payment;
-import org.openatom.springcloud.config.DynamicFeignClientFactory;
+import org.openatom.springcloud.config.DynamicFeignClientFactoryConfig;
 import org.openatom.springcloud.service.PaymentServiceOpenFeignDynamicFeignClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +28,7 @@ public class OrderConsumerControllerDynamicFeignClientFactory {
     private String SERVICE_PROVIDER_NAME;
 
     @Autowired
-    private DynamicFeignClientFactory<PaymentServiceOpenFeignDynamicFeignClientFactory> client;
+    private DynamicFeignClientFactoryConfig<PaymentServiceOpenFeignDynamicFeignClientFactory> client;
 
     /**
      * 获取具体的Service接口
