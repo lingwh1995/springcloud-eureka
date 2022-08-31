@@ -81,6 +81,7 @@
         <module>springcloud-basic-sample-provider-cluster-node-payment8010</module>
         <module>springcloud-consumer-loadbalance-openfeign-springbootadmin-client-order80</module>
         <module>springcloud-consumer-loadbalance-openfeign-perfect-log-system-order80</module>
+        <module>springcloud-consumer-loadbalance-openfeign-multiply-env-order80</module>
     </modules>
     <!--引入所有模块：结束-->
 
