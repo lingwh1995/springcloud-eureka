@@ -1,4 +1,4 @@
-package org.openatom.springcloud.config;
+package org.openatom.springcloud.interceptor;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

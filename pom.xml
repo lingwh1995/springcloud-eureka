@@ -76,7 +76,7 @@
         <module>springcloud-provider-seata-storage8008</module>
         <module>springcloud-mointor-springboot-admin-server9003</module>
         <module>springcloud-basic-sample-register-center-single-node7005</module>
-        <module>springcloud-basic-sample-consumer-loadbalance-openfeign-dynamic-servicename-order80</module>
+        <module>springcloud-basic-sample-consumer-loadbalance-openfeign-configuration-order80</module>
         <module>springcloud-basic-sample-provider-cluster-node-payment8009</module>
         <module>springcloud-basic-sample-provider-cluster-node-payment8010</module>
         <module>springcloud-consumer-loadbalance-openfeign-springbootadmin-client-order80</module>

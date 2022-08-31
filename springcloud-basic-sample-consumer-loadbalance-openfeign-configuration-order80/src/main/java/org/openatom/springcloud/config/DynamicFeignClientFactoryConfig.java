@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
  * @param <T>
  */
 @Configuration
-public class DynamicFeignClientFactory<T> {
+public class DynamicFeignClientFactoryConfig<T> {
 
     private FeignClientBuilder feignClientBuilder;
 
-    public DynamicFeignClientFactory(ApplicationContext appContext) {
+    public DynamicFeignClientFactoryConfig(ApplicationContext appContext) {
         this.feignClientBuilder = new FeignClientBuilder(appContext);
     }
 
