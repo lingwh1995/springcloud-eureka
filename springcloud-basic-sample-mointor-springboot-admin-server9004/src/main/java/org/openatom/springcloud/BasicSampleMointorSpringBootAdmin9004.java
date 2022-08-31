@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableAdminServer
 @SpringBootApplication
-public class MointorSpringBootAdmin9003 {
+public class BasicSampleMointorSpringBootAdmin9004 {
 
     public static void main(String[] args) {
-        SpringApplication.run(MointorSpringBootAdmin9003.class,args);
+        SpringApplication.run(BasicSampleMointorSpringBootAdmin9004.class,args);
     }
 }
