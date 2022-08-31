@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * 使用系统自带的OpenFeignClient发起调用
  */
 @Component
-@FeignClient(name="SPRINGCLOUD-BASIC-SAMPLE-PROVIDER-PAYMENT-SERVICE-CLUSTER")
+@FeignClient(name="SPRINGCLOUD-PROVIDER-PAYMENT-SERVICE-CLUSTER")
 public interface PaymentServiceOpenFeign {
     @PostMapping(value = "/provider/payment/create")
     CommonResult create(@RequestBody Payment payment);
@@ -26,7 +26,7 @@ public interface PaymentServiceOpenFeign {
      * @param id
      * @return
      */
-    @GetMapping(value = "/provider/$evn/get/{id}")
+    @GetMapping(value = "/provider/$targetStr/get/{id}")
     CommonResult<Payment> getPaymentByIdReplaceRouter(@PathVariable("id") Long id);
 
     @GetMapping(value = "/provider/payment/openfeign/timeout")
