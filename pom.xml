@@ -83,6 +83,7 @@
         <module>springcloud-consumer-loadbalance-openfeign-perfect-log-system-order80</module>
         <module>springcloud-consumer-loadbalance-openfeign-multiply-env-order80</module>
         <module>springcloud-consumer-loadbalance-openfeign-configuration-openfeign-senior-order80</module>
+        <module>springcloud-basic-sample-mointor-springboot-admin-server9004</module>
     </modules>
     <!--引入所有模块：结束-->
 
