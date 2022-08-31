@@ -2,7 +2,7 @@ server:
   port: 9003 #访问端口
 spring:
   application:
-    name: SPRINGCLOUD-BASIC-SAMPLE-MOINTOR-SPRINGBOOT-ADMIN-SERVER-DEV  #注意:服务名不要出现_
+    name: SPRINGCLOUD-BASIC-SAMPLE-MOINTOR-SPRINGBOOT-ADMIN-SERVER  #注意:服务名不要出现_
   devtools: #热部署开关
     restart:
       enabled: true
@@ -21,7 +21,7 @@ eureka:
     fetchRegistry: true  #是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
     service-url:
       #单机版
-      defaultZone: http://localhost:7005/eureka
+      defaultZone: http://localhost:7001/eureka
       #集群版
       #defaultZone: http://eureka7002:7002/eureka,http://eureka7003:7003/eureka,http://eureka7004:7004/eureka
   instance:

@@ -1,19 +1,20 @@
-package org.openatom.springcloud.services;
+package org.openatom.springcloud.service;
 
 import org.openatom.springcloud.entities.CommonResult;
 import org.openatom.springcloud.entities.Payment;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
- * 使用自定义的自带的OpenFeignClient发起调用
+ * 使用系统自带的OpenFeignClient发起调用
  */
-@Service
-public interface PaymentServiceOpenFeignDynamicFeignClientFactory {
+@Component
+@FeignClient(name="SPRINGCLOUD-BASIC-SAMPLE-PROVIDER-PAYMENT-SERVICE-CLUSTER-DEV")
+public interface PaymentServiceOpenFeign {
     @PostMapping(value = "/provider/payment/create")
     CommonResult create(@RequestBody Payment payment);
 

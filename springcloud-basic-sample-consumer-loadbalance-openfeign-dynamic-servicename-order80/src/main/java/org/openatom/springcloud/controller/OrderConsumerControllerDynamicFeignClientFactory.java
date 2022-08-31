@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openatom.springcloud.entities.CommonResult;
 import org.openatom.springcloud.entities.Payment;
 import org.openatom.springcloud.config.DynamicFeignClientFactory;
-import org.openatom.springcloud.services.PaymentServiceOpenFeignDynamicFeignClientFactory;
+import org.openatom.springcloud.service.PaymentServiceOpenFeignDynamicFeignClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
