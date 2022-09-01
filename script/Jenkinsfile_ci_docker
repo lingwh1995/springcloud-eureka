@@ -48,7 +48,7 @@ node {
             publishers:
                 [
                     sshPublisherDesc(
-                        configName: 'cidocker',
+                        configName: 'master',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: false,
