@@ -17,7 +17,7 @@
         <docker.registry.uri>192.168.0.5:5000</docker.registry.uri>
         <docker.registry.username>admin</docker.registry.username>
         <docker.registry.password>123456</docker.registry.password>
-        <docker.host>tcp://192.168.0.5:2375</docker.host>
+        <docker.host>tcp://192.168.0.4:2375</docker.host>
         <!--设置当前服务端口-->
         <docker.container.port>80</docker.container.port>
         <!--docker容器端口映射-->
