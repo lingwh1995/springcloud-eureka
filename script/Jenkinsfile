@@ -58,7 +58,7 @@ node {
             publishers:
                 [
                     sshPublisherDesc(
-                        configName: 'master',
+                        configName: 'docker-server',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: false,
