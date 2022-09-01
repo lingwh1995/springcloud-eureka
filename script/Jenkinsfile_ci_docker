@@ -53,7 +53,7 @@ node {
                             sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: "test.sh",
+                                execCommand: "/test.sh",
                                 execTimeout: 600000,
                                 flatten: false,
                                 makeEmptyDirs: false,
