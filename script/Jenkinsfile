@@ -44,7 +44,33 @@ node {
      */
     stage('自动部署上传到私服中的所有镜像到docker') {
         echo '开始 自动部署上传到私服中的所有镜像到docker...'
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'cidocker', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '/test.sh', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+        sshPublisher(
+            publishers:
+                [
+                    sshPublisherDesc(
+                        configName: 'cidocker',
+                        transfers: [
+                            sshTransfer(
+                                cleanRemote: false,
+                                excludes: '',
+                                execCommand: "sh test.sh",
+                                execTimeout: 600000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: '/',
+                                remoteDirectorySDF: false,
+                                removePrefix: '',
+                                sourceFiles: ''
+                            )
+                        ],
+                        usePromotionTimestamp: false,
+                        useWorkspaceInPromotion: false,
+                        verbose: false
+                    )
+                ]
+       )
        echo '结束 自动部署上传到私服中的所有镜像到docker...'
     }
 
