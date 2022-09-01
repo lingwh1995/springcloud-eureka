@@ -58,7 +58,7 @@ node {
             publishers:
                 [
                     sshPublisherDesc(
-                        configName: 'docker-server',
+                        configName: 'cidocker',
                         transfers: [
                             sshTransfer(
                                 cleanRemote: false,
