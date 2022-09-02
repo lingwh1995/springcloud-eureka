@@ -85,6 +85,7 @@
         <module>springcloud-consumer-loadbalance-openfeign-configuration-openfeign-senior-order80</module>
         <module>springcloud-basic-sample-mointor-springboot-admin-server9004</module>
         <module>springcloud-ci-docker80</module>
+        <module>springcloud-ci-k8s80</module>
     </modules>
     <!--引入所有模块：结束-->
 
