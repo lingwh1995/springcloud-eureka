@@ -1,12 +1,12 @@
 //定义远程git仓库中项目的地址
 def project_url='https://gitee.com/lingwh1995/springcloud-eureka.git'
 
-def jekins_ip='192.168.0.5'
+def jenkins_ip='192.168.0.5'
 
 node {
     echo '开始执行自动化...'
     /*指定在那台Jenkins节点上运行*/
-    agent { label '${jekins_ip}'}
+    agent { label '${jenkins_ip}'}
 
     /*从远程仓库检出代码*/
     stage('从远程仓库检出代码') {
