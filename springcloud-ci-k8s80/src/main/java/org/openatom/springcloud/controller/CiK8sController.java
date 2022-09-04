@@ -11,7 +11,7 @@ public class CiK8sController {
 
     @GetMapping("/ci/k8s")
     public CommonResult<String> create(Payment payment) {
-        return new CommonResult(200,"持续集成","测试持续集成到K8s+测试WebHook");
+        return new CommonResult(200,"持续集成","测1试持续集成到K8s+测试WebHook");
     }
 
 }
