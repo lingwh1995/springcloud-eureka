@@ -5,10 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.openatom.springcloud.entities.CommonResult;
 import org.openatom.springcloud.entities.Payment;
 
-
-/**
- * 用于测试8003这个节点中的服务熔断、服务降级功能
- */
 @RestController
 public class CiK8sController {
 
